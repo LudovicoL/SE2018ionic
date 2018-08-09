@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Segreteria Didattica</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="menu">
+      <ion-segment-button value="aggiungi">
+        Aggiungi
+      </ion-segment-button>
+      <ion-segment-button value="modifica">
+        Modifica
+      </ion-segment-button>
+      <ion-segment-button value="cancella">
+        Cancella
+      </ion-segment-button>
+      <ion-segment-button value="segnalazione">
+        Segnalazioni
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div [ngSwitch]="menu">
+    <ion-list *ngSwitchCase="'aggiungi'">
+      <ion-list>
+        <button ion-item *ngFor="let i of items" (click)="aggiungi(i.title)" icon-start>
+          <ion-icon name="add" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+          {{ i.title }}
+        </button>
+      </ion-list>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'modifica'">
+        <ion-list>
+          <button ion-item *ngFor="let i of items" (click)="modifica(i.title)" icon-start>
+            <ion-icon name="create" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+            {{ i.title }}
+          </button>
+        </ion-list>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'cancella'">
+          <ion-list>
+            <button ion-item *ngFor="let i of items" (click)="cancella(i.title)" icon-start>
+              <ion-icon name="remove" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+              {{ i.title }}
+            </button>
+          </ion-list>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'segnalazione'">
+            <ion-list>
+              <button ion-item *ngFor="let s of segnalazionu" (click)="listasegnalazioni()" icon-start>
+                <ion-icon name="bookmarks" item-start></ion-icon>
+                {{ s.title }}
+              </button>
+            </ion-list>
+          </ion-list>
+  </div>
+</ion-content>
+
+
