@@ -1,0 +1,243 @@
+<!--
+  Generated template for the UpdatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>update</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="ModificaDocente">
+    <ion-list>
+      <p>DOCENTE</p>
+      <ion-item>
+        <ion-label>name      </ion-label>
+          <ion-input type = "text" #name>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label>surname         </ion-label>
+            <ion-input type = "text" #surname>      
+            </ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>email         </ion-label>
+          <ion-input type = "email" #email>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>password         </ion-label>
+          <ion-input type = "password" #password>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>data         </ion-label>
+          <ion-input type = "date" data-ng-pattern="YYYY-MM-DD" #data>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>stipendio         </ion-label>
+          <ion-input type = "number" #stipendio>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>indirizzo         </ion-label>
+          <ion-input type = "text" #indirizzo>      
+          </ion-input>
+      </ion-item>
+
+      
+    <button ion-button full color='light' (click)="addDocente(name.value,surname.value,email.value,password.value,data.value,indirizzo.value,stipendio.value)">Registra Docente</button>
+    </ion-list>
+  </div>
+
+
+  <div *ngIf="ModificaInsegnamento">
+    <ion-list>
+      <p>INSEGNAMENTO</p>
+      <ion-item>
+        <ion-label>nome      </ion-label>
+          <ion-input type = "text" #nome>      
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label>Corso</ion-label>
+          <ion-select [(ngModel)]="nomecorso">
+            <ion-option *ngFor="let c of corsi">{{c.nome}}</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>anno         </ion-label>
+        <ion-select [(ngModel)]="anno">
+          <ion-option *ngFor="let number of [1,2,3]">{{number}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>semestre         </ion-label>
+        <ion-select [(ngModel)]="semestre">
+          <ion-option *ngFor="let number of [1,2]">{{number}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>CFU         </ion-label>
+        <ion-select [(ngModel)]="cfu">
+          <ion-option *ngFor="let number of [3,4,5,6,7,8,9,10,11,12]">{{number}}</ion-option>
+        </ion-select>
+    </ion-item>
+      
+    <button ion-button full color='light' (click)="addInsegnamento(nomecorso,nome.value,cfu,anno,semestre)">Aggiungi insegnamento</button>
+    </ion-list>
+  </div>
+
+  <div *ngIf="ModificaAula">
+    <ion-list>
+      <p>Aula</p>
+      <ion-item>
+        <ion-label>nome</ion-label>
+          <ion-input type = "text" value="{{param1}}" #nome>      
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label>Grandezza</ion-label>
+          <ion-select [(ngModel)]="grandezza" >
+            <ion-option value="piccola">piccola(70 persone)</ion-option>
+            <ion-option value="media">media(100 persone)</ion-option>
+            <ion-option value="grande">grande(120 persone)</ion-option>
+          </ion-select>
+      </ion-item>
+    <button ion-button full color='light' (click)="addAula(nome.value,grandezza,proiettore,ariacondizionata)">Aggiungi aula</button>
+    </ion-list>
+  </div>
+
+  <div *ngIf="ModificaCorso">
+      <ion-list>
+          <p>CORSO</p>
+          <ion-item>
+            <ion-label>id </ion-label>
+              <ion-input type = "number" value= "{{param5}}" #idCorso>
+              </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>nome </ion-label>
+              <ion-input type = "text" value= "{{param1}}" #nome>
+              </ion-input>
+          </ion-item>
+ 
+          <ion-item>
+              <ion-label>facolta</ion-label>
+                <ion-input type = "text" value= "{{param3}}" #facolta>      
+                </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>durata         </ion-label>
+              <ion-input type = "number" value= "{{param2}}" #durata>      
+              </ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label>livello         </ion-label>
+              <ion-input type = "text" value= "{{param4}}" #livello>      
+              </ion-input>
+          </ion-item>
+          
+        <button ion-button full color='light' (click)="aggiornaCorso(nome.value,facolta.value,durata.value,livello.value,idCorso.value)">Modifica corso</button>
+        </ion-list>
+  </div>
+
+
+  <div *ngIf="ModificaStudente">
+    <ion-list>
+      <p>STUDENTE</p>
+      <ion-item>
+        <ion-label>name      </ion-label>
+          <ion-input type = "text" #name>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label>surname         </ion-label>
+            <ion-input type = "text" #surname>      
+            </ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>email         </ion-label>
+          <ion-input type = "email" #email>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>password         </ion-label>
+          <ion-input type = "password" #password>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>data         </ion-label>
+          <ion-input type = "date" data-ng-pattern="YYYY-MM-DD" #data>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>matricola         </ion-label>
+          <ion-input type = "number" #matricola>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>indirizzo         </ion-label>
+          <ion-input type = "text" #indirizzo>      
+          </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Corso</ion-label>
+        <ion-select [(ngModel)]="nomecorso">
+          <ion-option *ngFor="let c of corsi">{{c.nome}}</ion-option>
+        </ion-select>
+    </ion-item>
+      
+    <button ion-button full color='light' (click)="addStudente(nomecorso,name.value,surname.value,email.value,password.value,data.value,indirizzo.value,matricola.value)">Registra studente</button>
+    </ion-list>
+  </div>
+
+
+  <div *ngIf="ModificaStrumento">
+    <ion-list>
+      <p>STRUMENTO</p>
+      <ion-item>
+        <ion-label>nome      </ion-label>
+          <ion-input type = "text" value="{{param1}}" #nome readonly>      
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label>Aula</ion-label>
+          <ion-select [(ngModel)]="nomeaula">
+            <ion-option *ngFor="let a of aule">{{a.nome}}</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label>Attivo</ion-label>
+          <ion-toggle [checked]=true [(ngModel)]="attivo"></ion-toggle>
+      </ion-item>
+      
+    <button ion-button full color='light' (click)="aggiornaStrumento(nome.value,nomeaula,attivo)">Aggiungi insegnamento</button>
+    </ion-list>
+  </div>
+
+</ion-content>

@@ -4,5 +4,6 @@ export interface Insegnamento{
     anno:number,
     semestre:number,
     cfu:number,
-    corsoIdCorso:number
+    corsoIdCorso:number,
+    abilitazione:number,
 }
