@@ -15,6 +15,7 @@ const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 export class CorsoProvider {
   corsogetUrl: string = 'http://localhost:8080/SE2018/corso/getAll'
   corsosaveUrl: string = 'http://localhost:8080/SE2018/corso/save'
+  updateUrl:string= 'http://localhost:8080/SE2018/corso/update'
   constructor(public http: HttpClient) {
     console.log('Hello CorsoProvider Provider');
   }
@@ -25,5 +26,9 @@ export class CorsoProvider {
 
   saveCorso(corso: Corso): Observable<Corso>{
     return this.http.post<Corso>(this.corsosaveUrl, corso, {headers});
+  }
+  
+  update(corso:Corso): Observable<Corso>{
+    return this.http.patch<Corso>(this.updateUrl, corso, {headers});
   }
 }

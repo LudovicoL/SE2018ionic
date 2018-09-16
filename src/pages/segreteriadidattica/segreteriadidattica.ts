@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Item, AlertController, Alert, App, MenuController } from 'ionic-angular';
-import { RegistraStudentePage } from '../registra-studente/registra-studente';
 import { AggiungiPage } from '../aggiungi/aggiungi';
 import { ModificaPage } from '../modifica/modifica';
 
@@ -59,11 +58,15 @@ export class SegreteriadidatticaPage {
         'description': 'An open-source, cross-platform runtime environment for developing server-side Web applications.',
         'color': '#78BD43'
       },
+      {
+        'title': 'Strumento',
+        'icon': 'nodejs',
+        'description': 'An open-source, cross-platform runtime environment for developing server-side Web applications.',
+        'color': '#78BD43'
+      },
     ]
   }
-  registrastudente(){
-    this.navCtrl.push(RegistraStudentePage);
-  }
+
 
   aggiungi(item){
     alert(" " +item);

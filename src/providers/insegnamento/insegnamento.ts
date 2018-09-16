@@ -13,11 +13,14 @@ const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 @Injectable()
 export class InsegnamentoProvider {
   insegnamentosaveUrl: string = 'http://localhost:8080/SE2018/insegnamento/save'
-
+  insegnamentogetUrl:string='http://localhost:8080/SE2018/insegnamento/getAll'
   constructor(public http: HttpClient) {
     console.log('Hello InsegnamentoProvider Provider');
   }
   saveInsegnamento(insegnamento: Insegnamento): Observable<Insegnamento>{
     return this.http.post<Insegnamento>(this.insegnamentosaveUrl, insegnamento, {headers});
+  }
+  getInsegnamento(): Observable<Insegnamento[]>{
+    return this.http.get<Insegnamento[]>(this.insegnamentogetUrl);
   }
 }

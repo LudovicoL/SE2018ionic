@@ -6,5 +6,7 @@ export interface Docente{
     data?:Date,
     indirizzo?:string,
     stipendio?: number,
-    hide?:boolean
+    hide?:boolean,
+    abilitazione:number
+
 }

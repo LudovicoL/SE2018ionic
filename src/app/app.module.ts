@@ -7,7 +7,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { RegistraStudentePage } from '../pages/registra-studente/registra-studente';
 import { HttpClientModule } from '@angular/common/http';
 import { StudenteProvider } from '../providers/studente/studente';
 import { LoginPage } from '../pages/login/login';
@@ -34,7 +33,6 @@ var config = {
   declarations: [
     MyApp,
     HomePage,
-    RegistraStudentePage,
     CiaoPage,
     LoginPage,
     SegreteriadidatticaPage,
@@ -52,7 +50,6 @@ var config = {
     MyApp,
     HomePage,
     LoginPage,
-    RegistraStudentePage,
     CiaoPage,
     SegreteriadidatticaPage,
     CorsoPage

@@ -4,5 +4,7 @@ export interface Corso{
     facolta:string,
     durata:number,
     livello:string;
-    idCorso:number
+    idCorso:number,
+    abilitazione:number
+
 }

@@ -18,14 +18,14 @@
       <ion-list>
         <p>STUDENTE</p>
         <ion-item>
-          <ion-label>name      </ion-label>
-            <ion-input type = "text" #name>      
+          <ion-label>nome      </ion-label>
+            <ion-input type = "text" #nome>      
             </ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label>surname         </ion-label>
-              <ion-input type = "text" #surname>      
+            <ion-label>cognome         </ion-label>
+              <ion-input type = "text" #cognome>      
               </ion-input>
 
         </ion-item>
@@ -66,7 +66,7 @@
           </ion-select>
       </ion-item>
         
-      <button ion-button full color='light' (click)="addStudente(nomecorso,name.value,surname.value,email.value,password.value,data.value,indirizzo.value,matricola.value)">Registra studente</button>
+      <button ion-button full color='light' (click)="addStudente(nomecorso,nome.value,cognome.value,email.value,password.value,data.value,indirizzo.value,matricola.value)">Registra studente</button>
       </ion-list>
     </div>
 
@@ -207,17 +207,28 @@
             </ion-select>
         </ion-item>
 
+        
+      <button ion-button full color='light' (click)="addAula(nome.value,grandezza)">Aggiungi aula</button>
+      </ion-list>
+    </div>
+
+    <div *ngIf="Strumento">
+      <ion-list>
+        <p>STRUMENTO</p>
         <ion-item>
-          <ion-label>Proiettore</ion-label>
-          <ion-toggle [(ngModel)]="proiettore"></ion-toggle>
+          <ion-label>nome      </ion-label>
+            <ion-input type = "text" #nome>      
+            </ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Aria condizionata</ion-label>
-          <ion-toggle [(ngModel)]="ariacondizionata"></ion-toggle>
-        </ion-item>
+            <ion-label>Aula</ion-label>
+            <ion-select [(ngModel)]="aula" >
+              <ion-option *ngFor="let a of aule">{{a.nome}}</ion-option>
+            </ion-select>
+          </ion-item>
 
         
-      <button ion-button full color='light' (click)="addAula(nome.value,grandezza,proiettore,ariacondizionata)">Aggiungi aula</button>
+      <button ion-button full color='light' (click)="addStrumento(nome.value,aula)">Aggiungi aula</button>
       </ion-list>
     </div>
 

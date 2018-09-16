@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { RegistraStudentePage } from '../registra-studente/registra-studente';
 import { LoginPage } from '../login/login';
 import { SegreteriadidatticaPage } from '../segreteriadidattica/segreteriadidattica';
 import { MenuPage } from '../menu/menu';
