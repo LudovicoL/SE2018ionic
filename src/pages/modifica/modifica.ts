@@ -3,13 +3,17 @@ import { IonicPage, NavController, NavParams, AlertController, ModalController }
 import { CorsoProvider } from '../../providers/corso/corso';
 import { Corso } from '../../app/models/Corso';
 import { INVALID } from '../../../node_modules/@angular/forms/src/model';
-
-/**
- * Generated class for the ModificaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { StudenteProvider } from '../../providers/studente/studente';
+import { DocenteProvider } from '../../providers/docente/docente';
+import { InsegnamentoProvider } from '../../providers/insegnamento/insegnamento';
+import { StrumentoProvider } from '../../providers/strumento/strumento';
+import { AulaProvider } from '../../providers/aula/aula';
+import { Studente } from '../../app/models/Studente';
+import { Docente } from '../../app/models/Docente';
+import { Insegnamento } from '../../app/models/Insegnamento';
+import { Strumento } from '../../app/models/Strumento';
+import { Aula } from '../../app/models/Aula';
+import { UpdatePage } from '../update/update';
 
 @IonicPage()
 @Component({
@@ -19,54 +23,59 @@ import { INVALID } from '../../../node_modules/@angular/forms/src/model';
 export class ModificaPage {
   course:string;
   corsi:Corso[];
+  insegnamenti:Insegnamento[];
+  aule:Aula[];
+  strumentazioni:Strumento[];
+  studenti:Studente[];
+  docenti:Docente[];
 
-  Corso: boolean=false;
-  Insegnamento: boolean=false;
-  Aula: boolean=false;
-  strumentazione: boolean=false;
-  Studente: boolean=false;
-  Docente: boolean=false;
-  ModificaCorso: boolean=false;
+  searchQuery: string = '';
+  items: any[];
+  items1:any[];
+
+  Corsoo: boolean=false;
+  Insegnamentoo: boolean=false;
+  Aulaa: boolean=false;
+  Strumentoo: boolean=false;
+  Studentee: boolean=false;
+  Docentee: boolean=false;
 
   parameter: string;
   nomecorso: string;
-
-  @ViewChild('name') name;
-
-  constructor(public modalCtrl: ModalController, private corsoProvider: CorsoProvider,public alertCtrl : AlertController,public navCtrl: NavController, public navParams: NavParams) {
-    this.initializeItems();
+  constructor(public modalCtrl: ModalController,private aulaProvider: AulaProvider,private strumentoProvider: StrumentoProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private studenteProvider: StudenteProvider, private corsoProvider: CorsoProvider,public alertCtrl : AlertController,public navCtrl: NavController, public navParams: NavParams) {
+    
     this.parameter = navParams.get('paramNome'); 
     this.course = navParams.data
 
     switch (this.parameter) {
       case "Corso":
-        this.Corso= true;
-        break;
+        this.Corsoo= true;
+        this.initializeItems();
+      break;
     
       case "Insegnamento":
-        this.Insegnamento=true;
-        this.listaCorsi();
+        this.Insegnamentoo=true;
+        this.initializeItems();
         break;
 
       case "Aula":
-        this.Aula=true;
-        break;
+        this.Aulaa=true;
+        this.initializeItems();
+      break;
 
-      case "Strumentazione":
-        this.strumentazione=true;
+      case "Strumento":
+        this.Strumentoo=true;
+        this.initializeItems();
         break;
 
       case "Studente":
-        this.Studente= true;
-        this.listaCorsi();
+        this.Studentee= true;
+        this.initializeItems();
         break;
 
       case "Docente":
-        this.Docente= true;
-        break;
-
-      case "ModificaCorso":
-        this.ModificaCorso= true;
+        this.Docentee= true;
+        this.initializeItems();
         break;
     }
   }
@@ -74,56 +83,87 @@ export class ModificaPage {
     console.log('ionViewDidLoad AggiungiPage');
   }
 
-  listaCorsi(){
-    this.corsoProvider.getCorso().subscribe(corsi => {
-      this.corsi = corsi;
-    });
-  }
-  searchQuery: string = '';
-  items: Corso[];
-
-
   initializeItems() {
-    this.corsoProvider.getCorso().subscribe(corsi => {
-      this.items = corsi;
-    });
+    if(this.Corsoo==true){
+      this.corsoProvider.getCorso().subscribe(corsi=>{
+        this.items = corsi;
+      });
+    }
+    if(this.Insegnamentoo==true){
+      this.insegnamentoProvider.getInsegnamento().subscribe(insegnamenti => {
+        this.items = insegnamenti;
+      });
+    }
+    if(this.Aulaa==true){
+      this.aulaProvider.getAula().subscribe(aule=>{
+        this.items = aule;
+      });
+    }
+    if(this.Strumentoo==true){
+      this.strumentoProvider.getStrumento().subscribe(strumentazioni=>{
+        this.items = strumentazioni;
+      });
+    }
+    if(this.Studentee==true){
+      this.studenteProvider.getStudente().subscribe(studenti=>{
+        this.items = studenti;
+      });
+    }
+    if(this.Docentee==true){
+      this.docenteProvider.getDocente().subscribe(docenti=>{
+        this.items = docenti;
+      });
+    }
   }
-  modificaCorso(item,course){
-    course=item;
-    item='ModificaCorso';
-    this.navCtrl.push(ModificaPage,{paramNome:item, course})
-    console.log(course)
+  modificaCorso(page, nome, facolta,durata,livello,id,abilitazione){
+    console.log(id);
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome, param2:durata,param3:facolta,param4:livello,param5:id,param6:abilitazione})
+  }
+  modificaInsegnamento(item){
+
+    console.log(item)
   }
 
-  aggiornaCorso(){
-    console.log(this.course);
+  modificaAula(page, nome, grandezza,latitudine,longitudine,id){
+    console.log(id);
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome, param2:grandezza,param3:latitudine,param4:longitudine,param5:id})
+  }
+
+  modificaStrumentazione(page,nome,abilitazione,idStrumento){
+    console.log(nome)
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome,param2:abilitazione,param3:idStrumento})
+
+  }
+
+  modificaStudente(item){
+
+    console.log(item)
+  }
+
+  modificaDocente(item){
+
+    console.log(item)
   }
 
   getItems(ev: any) {
-    // Reset items back to all of the items
-    //this.initializeItems();
-
-    // set val to the value of the searchbar
     const val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      console.log(val);
+      if(this.Studentee==true){
+        this.items = this.items.filter((item) => {
+          console.log(item);
+          return (item.matricola.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+        })
+      }
+      else{
+        this.items = this.items.filter((item) => {
+          console.log(item);
+          return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
     }
     else{
       this.initializeItems();
     }
-  }
-
-  
-  showAlert(message : string) {
-    let alert = this.alertCtrl.create({
-      title: 'Registrazione!',
-      subTitle: message,
-      buttons: ['OK']
-    });
-    alert.present();
   }
 }

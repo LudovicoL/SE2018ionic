@@ -34,12 +34,13 @@ export class AggiungiPage {
   Corso: boolean=false;
   Insegnamento: boolean=false;
   Aula: boolean=false;
-  strumentazione: boolean=false;
+  Strumento: boolean=false;
   Studente: boolean=false;
   Docente: boolean=false;
 
   parameter: string;
   nomecorso: string;
+
 
   studente:  Studente;
   studenti: Studente[];
@@ -66,6 +67,7 @@ export class AggiungiPage {
   aula:Aula;
   corso: Corso;
   corsi:Corso[];
+  aule:Aula[];
   strumento:Strumento;
   constructor(private strumentoProvider: StrumentoProvider,private aulaProvider: AulaProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private corsoProvider: CorsoProvider, public alertCtrl : AlertController,private studenteProvider: StudenteProvider,public navCtrl: NavController, public navParams: NavParams,public fireAuth: AngularFireAuth) {
   
@@ -84,8 +86,9 @@ export class AggiungiPage {
         this.Aula=true;
         break;
 
-      case "Strumentazione":
-        this.strumentazione=true;
+      case "Strumento":
+        this.Strumento=true;
+        this.listaAule();
         break;
 
       case "Studente":
@@ -128,8 +131,12 @@ export class AggiungiPage {
       this.corsi = corsi;
     });
   }
-
-  addStudente(nomecorso,name,surname,email,password,data,indirizzo, matricola, idcorso) {
+  listaAule(){
+    this.aulaProvider.getAula().subscribe(aule => {
+      this.aule = aule;
+    });
+  }
+  addStudente(nomecorso,nome,cognome,email,password,data,indirizzo, matricola, idcorso) {
     this.listaCorsi();
     console.log(nomecorso)
     for(var i=0; i<this.corsi.length; i++){
@@ -145,7 +152,7 @@ export class AggiungiPage {
       console.log(err.message)
       this.showAlert(err.message);
     })
-    this.studenteProvider.saveStudente({name,surname,email,password,data,indirizzo,matricola, idcorso} as Studente).subscribe(studente => {
+    this.studenteProvider.saveStudente({nome,cognome,email,password,data,indirizzo,matricola,idcorso} as Studente).subscribe(studente => {
       console.log(this.studente);
     });
   }
@@ -165,27 +172,25 @@ export class AggiungiPage {
     });
   }
 
-  addAula(nome,grandezza,proiettore,ariacondizionata,agibile,aulaIdAula){
+  addAula(nome,grandezza){
     this.aulaProvider.saveAula({nome,grandezza} as Aula).subscribe(aula => {
-      if(proiettore){
-        nome="proiettore";
-        agibile=1;
-        this.aulaProvider.ultimaAula().subscribe(aulaIdAula => {
-          this.strumentoProvider.saveStrumento({nome,agibile,aulaIdAula} as Strumento).subscribe(strumento => {
-          });
-        });;
-      }
-      if(ariacondizionata){
-        nome="proiettore";
-        agibile=1;
-        this.aulaProvider.ultimaAula().subscribe(aulaIdAula => {
-          this.strumentoProvider.saveStrumento({nome,agibile,aulaIdAula} as Strumento).subscribe(strumento => {
-          });
-        });;
-      }
       this.showAlert('Aula aggiunta con successo');
       this.navCtrl.push(HomePage);
     })
+  }
+
+  addStrumento(nome,aula,agibile,idAula){
+    for(var i=0; i<this.aule.length; i++){
+      console.log(aula);
+      agibile=1;
+      if(aula==this.aule[i].nome)
+        console.log(aula);
+        idAula=this.aule[i].idAula;
+        console.log(this.aule[i].idAula);
+        this.strumentoProvider.saveStrumento({nome,idAula,agibile} as Strumento).subscribe(strumento => {
+        });
+      }
+
   }
 
   showAlert(message : string) {

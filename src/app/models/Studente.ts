@@ -1,11 +1,13 @@
 export interface Studente{
-    name:string,
-    surname:string,
+    nome:string,
+    cognome:string,
     email?:string,
     password?:string,
     data?:Date,
     indirizzo?:string,
     matricola?: number,
     idcorso?: number,
-    hide?:boolean
+    hide?:boolean,
+    abilitazione:number
+
 }

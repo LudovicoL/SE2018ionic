@@ -15,6 +15,7 @@ const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 export class AulaProvider {
   aulasaveUrl: string = 'http://localhost:8080/SE2018/aula/save'
   getultimaaulaurl:string='http://localhost:8080/SE2018/aula/getultimaaula'
+  aulagetUrl:string='http://localhost:8080/SE2018/aula/getAll'
 
   constructor(public http: HttpClient) {
     console.log('Hello AulaProvider Provider');
@@ -26,6 +27,9 @@ export class AulaProvider {
 
   ultimaAula(): Observable<number>{ 
     return this.http.get<number>(this.getultimaaulaurl);
+  }
 
+  getAula(): Observable<Aula[]>{
+    return this.http.get<Aula[]>(this.aulagetUrl);
   }
 }
