@@ -1,0 +1,29 @@
+
+ 
+<ion-content>
+    <ion-label>&emsp; Insegnamento:{{param.nome}}<br>&emsp; Corso:{{param.nomeCorso}}</ion-label>
+
+  <ion-item>
+      <ion-calendar #calendar (onDaySelect)="onDaySelect($event)" ></ion-calendar>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Data Inceput Programare</ion-label>
+    <ion-datetime #calendar displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment"></ion-datetime>
+  </ion-item>
+      
+  <ion-item>
+    <ion-label>Data Sfarsit Programare</ion-label>
+    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="appoiment1"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Aula</ion-label>
+    <ion-select [(ngModel)]="aula" >
+      <ion-option *ngFor="let a of items" value="{{a.idAula}}">{{a.nome}} </ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <button ion-button full color='light' (click)="addlezione(appoiment,appoiment1,param.idInsegnamento,aula)" [disabled]="!appoiment || !appoiment1 || !enabled">Aggiungi lezione</button>
+
+</ion-content>
