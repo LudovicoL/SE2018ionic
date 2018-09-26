@@ -1,12 +1,15 @@
 export interface Docente{
-    name:string,
-    surname:string,
+    idDocente:number,
+    nome:string,
+    cognome:string,
     email?:string,
     password?:string,
     data?:Date,
     indirizzo?:string,
     stipendio?: number,
     hide?:boolean,
-    abilitazione:number
+    abilitazione:number,
+    idUtente:number,
+    abilit:string
 
 }

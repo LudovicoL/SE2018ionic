@@ -26,8 +26,8 @@
     <div *ngIf="Insegnamentoo">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-label (click)="modificaInsegnamento('ModificaInsegnamento',item.nome,item.cfu,item.semestre)" *ngFor="let item of items">
-            {{ item.nome }}
+          <ion-label (click)="modificaInsegnamento('ModificaInsegnamento',item.idInsegnamento,item.nome,item.cfu,item.semestre,item.anno,item.nomeDocente,item.nomeCorso)" *ngFor="let item of items">
+            NOME:{{ item.nome }} <br>CORSO:{{item.nomeCorso}}
           </ion-label>
         </ion-list>
     </div>
@@ -43,29 +43,22 @@
 
     <div *ngIf="Strumentoo">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-        <ion-list>
-          <ion-label (click)="modificaStrumentazione('ModificaStrumento',item.nome,item.abilitazione,item.idStrumento)" *ngFor="let item of items">
-            {{ item.nome }}
-          </ion-label>
+        <ion-list>    
+          <ion-item (click)="modificaStrumentazione('ModificaStrumento',item.nome,item.funzionante,item.idStrumento,item.idAula)" *ngFor="let item of items">Nome:  {{ item.nome }} &emsp;<br>Aula:  {{ item.nomeaula }} &emsp;</ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Studentee">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <table>
-          <tr><td>MATRICOLA &emsp;</td><td>NOME &emsp;</td><td>COGNOME &emsp;</td></tr>
-          <tr (click)="modificaStudente(item.nome)" *ngFor="let item of items"><td>{{ item.matricola }}</td><td>{{ item.nome }}</td><td>{{ item.cognome }}</td></tr>
-          </table>
+          <ion-item (click)="modificaStudente('ModificaStudente',item.nome,item.cognome,item.matricola,item.email,item.indirizzo,item.idUtente)" *ngFor="let item of items">MATRICOLA:{{ item.matricola }}<br>NOME:{{ item.nome }}<br>COGNOME{{ item.cognome }}</ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Docentee">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-label (click)="modificaDocente(item.nome)" *ngFor="let item of items">
-            {{ item.nome }}{{ item.cognome }}
-          </ion-label>
+            <ion-item (click)="modificaDocente('ModificaDocente',item.nome,item.cognome,item.stipendio,item.email,item.indirizzo,item.idUtente,item.idDocente)" *ngFor="let item of items">NOME:{{ item.nome }}<br>COGNOME:{{ item.cognome }}</ion-item>
         </ion-list>
     </div>
 

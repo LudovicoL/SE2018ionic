@@ -16,7 +16,9 @@ export class AulaProvider {
   aulasaveUrl: string = 'http://localhost:8080/SE2018/aula/save'
   getultimaaulaurl:string='http://localhost:8080/SE2018/aula/getultimaaula'
   aulagetUrl:string='http://localhost:8080/SE2018/aula/getAll'
-
+  aulagetByIdUrl:string='http://localhost:8080/SE2018/aula/getById'
+  updateUrl:string='http://localhost:8080/SE2018/aula/update'
+  deleteUrl:string='http://localhost:8080/SE2018/aula/delete'
   constructor(public http: HttpClient) {
     console.log('Hello AulaProvider Provider');
   }
@@ -31,5 +33,17 @@ export class AulaProvider {
 
   getAula(): Observable<Aula[]>{
     return this.http.get<Aula[]>(this.aulagetUrl);
+  }
+
+  getAulaById(id:number): Observable<Aula>{
+    return this.http.get<Aula>(this.aulagetByIdUrl + '/' + id);
+  }
+
+  update(aula:Aula): Observable<Aula>{
+    return this.http.patch<Aula>(this.updateUrl, aula, {headers});
+  }
+
+  delete(idAula:Response):Observable<Response>{
+    return this.http.delete<Response>(this.deleteUrl + '/' + idAula);
   }
 }
