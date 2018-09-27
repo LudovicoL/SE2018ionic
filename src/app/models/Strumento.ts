@@ -1,7 +1,8 @@
 export interface Strumento{
     idStrumento:number,
     nome:string,
-    agibile:number,
+    funzionante:number,
     idAula:number,
-    abilitazione:number
+    abilitazione:number,
+    nomeaula?:string
 }

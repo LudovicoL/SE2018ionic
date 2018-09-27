@@ -53,10 +53,18 @@
 
         <ion-list *ngSwitchCase="'segnalazione'">
             <ion-list>
-              <button ion-item *ngFor="let s of segnalazionu" (click)="listasegnalazioni()" icon-start>
-                <ion-icon name="bookmarks" item-start></ion-icon>
-                {{ s.title }}
-              </button>
+              <ion-label *ngFor="let item of items1"  icon-start>
+                  <ion-item>
+                    <ion-icon name="bookmarks" item-start></ion-icon>
+                      Descrizione:{{ item.descrizione }} <br> Stato:{{item.stato}}
+                    <button item-end (click)="modificaSegnalazione(item.idSegnalazione)" ion-button color="dark" round icon-start>
+                      <ion-icon name='construct' is-active="false"></ion-icon>                
+                    </button>
+                    <button item-end (click)="cancellaSegnalazione(item.idSegnalazione)" ion-button color="dark" round icon-start>
+                        <ion-icon name='trash' is-active="false"></ion-icon>
+                      </button>
+                </ion-item>
+              </ion-label>
             </ion-list>
           </ion-list>
   </div>

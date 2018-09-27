@@ -14,6 +14,9 @@ const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 export class DocenteProvider {
   docentesaveUrl: string = 'http://localhost:8080/SE2018/docente/save'
   docentegetUrl:string= 'http://localhost:8080/SE2018/docente/getAll'
+  updateUrl:string='http://localhost:8080/SE2018/docente/update'
+  updateAbilitazioneUrl:string='http://localhost:8080/SE2018/docente/updateAbilitazione'
+
   constructor(public http: HttpClient) {
     console.log('Hello DocenteProvider Provider');
   }
@@ -23,5 +26,12 @@ export class DocenteProvider {
   }
   getDocente(): Observable<Docente[]>{
     return this.http.get<Docente[]>(this.docentegetUrl);
+  }
+
+  update(docente:Docente): Observable<Docente>{
+    return this.http.patch<Docente>(this.updateUrl, docente, {headers});
+  }
+  updateAbilitazione(docente:Docente): Observable<Docente>{
+    return this.http.patch<Docente>(this.updateAbilitazioneUrl, docente, {headers});
   }
 }

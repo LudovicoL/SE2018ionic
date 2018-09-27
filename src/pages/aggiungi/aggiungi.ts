@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Studente } from '../../app/models/Studente';
 import { HomePage } from '../home/home';
 import { StudenteProvider } from '../../providers/studente/studente';
@@ -14,6 +14,10 @@ import { AulaProvider } from '../../providers/aula/aula';
 import { Aula } from '../../app/models/Aula';
 import { Strumento } from '../../app/models/Strumento';
 import { StrumentoProvider } from '../../providers/strumento/strumento';
+import { SegreteriadidatticaPage } from '../segreteriadidattica/segreteriadidattica';
+import * as moment from 'moment';
+import { CalendarioPage } from '../calendario/calendario';
+
 
 /**
  * Generated class for the AggiungiPage page.
@@ -27,41 +31,24 @@ import { StrumentoProvider } from '../../providers/strumento/strumento';
   selector: 'page-aggiungi',
   templateUrl: 'aggiungi.html',
 })
+
+
 export class AggiungiPage {
-
-
-
   Corso: boolean=false;
   Insegnamento: boolean=false;
   Aula: boolean=false;
   Strumento: boolean=false;
   Studente: boolean=false;
   Docente: boolean=false;
-
+  Calendario:boolean=false;
   parameter: string;
   nomecorso: string;
-
+  nomedocente:string;
 
   studente:  Studente;
   studenti: Studente[];
   docente: Docente;
-  @ViewChild('name') name;
-  @ViewChild('surname') surname;
-  @ViewChild('email') email;
-  @ViewChild('password') password;
-  @ViewChild('data') data;
-  @ViewChild('indirizzo') indirizzo;
-  @ViewChild('matricola') matricola;
-  @ViewChild('idcorso') idcorso;
-  @ViewChild('id') id;
-  @ViewChild('facolta') facolta;
-  @ViewChild('durata') durata;
-  @ViewChild('livello') livello;
-  @ViewChild('nome') nome;
-  @ViewChild('stipendio') stipendio;
-  @ViewChild('CFU') CFU;
-  @ViewChild('semestre') semestre;
-  @ViewChild('anno') anno;
+  docenti:Docente[];
 
 
   aula:Aula;
@@ -69,7 +56,9 @@ export class AggiungiPage {
   corsi:Corso[];
   aule:Aula[];
   strumento:Strumento;
-  constructor(private strumentoProvider: StrumentoProvider,private aulaProvider: AulaProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private corsoProvider: CorsoProvider, public alertCtrl : AlertController,private studenteProvider: StudenteProvider,public navCtrl: NavController, public navParams: NavParams,public fireAuth: AngularFireAuth) {
+  insegnamenti:Insegnamento[];
+  
+  constructor(private modalCtrl: ModalController,private strumentoProvider: StrumentoProvider,private aulaProvider: AulaProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private corsoProvider: CorsoProvider, public alertCtrl : AlertController,private studenteProvider: StudenteProvider,public navCtrl: NavController, public navParams: NavParams,public fireAuth: AngularFireAuth) {
   
     this.parameter = navParams.get('paramNome'); 
     switch (this.parameter) {
@@ -80,6 +69,7 @@ export class AggiungiPage {
       case "Insegnamento":
         this.Insegnamento=true;
         this.listaCorsi();
+        this.listaDocenti();
         break;
 
       case "Aula":
@@ -99,6 +89,11 @@ export class AggiungiPage {
       case "Docente":
         this.Docente= true;
         break;
+
+      case "Calendario":
+        this.Calendario= true;
+        this.listaInsegnamenti();
+        break;
     }
   }
   ionViewDidLoad() {
@@ -111,18 +106,20 @@ export class AggiungiPage {
     })
   };
 
-  addInsegnamento(nomecorso,nome,cfu,anno,semestre,corsoIdCorso){
+  addInsegnamento(nomecorso,nome,cfu,anno,semestre,idCorso,idDocente){
     this.listaCorsi();
-    console.log(nomecorso)
+    this.listaDocenti();
     for(var i=0; i<this.corsi.length; i++){
-      console.log(this.corsi[i])
-      if(this.nomecorso==this.corsi[i].nome)
-        corsoIdCorso=this.corsi[i].idCorso
+      if(nomecorso==this.corsi[i].nome)
+        idCorso=this.corsi[i].idCorso
     }
-    console.log(corsoIdCorso)
-    this.insegnamentoProvider.saveInsegnamento({nome,cfu,anno,semestre,corsoIdCorso} as Insegnamento).subscribe(insegnamento => {
+    for(var i=0; i<this.docenti.length; i++){
+      if(this.nomedocente==this.docenti[i].nome)
+        idDocente=this.docenti[i].idDocente
+    }
+    this.insegnamentoProvider.saveInsegnamento({nome,cfu,anno,semestre,idCorso,idDocente} as Insegnamento).subscribe(insegnamento => {
       this.showAlert('Insegnamento aggiunto con successo');
-      this.navCtrl.push(HomePage);
+      this.navCtrl.push(SegreteriadidatticaPage);
       })
     };
 
@@ -136,62 +133,89 @@ export class AggiungiPage {
       this.aule = aule;
     });
   }
+  listaDocenti(){
+    this.docenteProvider.getDocente().subscribe(docenti =>{
+      this.docenti = docenti;
+    })
+  }
+  listaInsegnamenti(){
+    this.insegnamentoProvider.getInsegnamento().subscribe(insegnamenti =>{
+      this.insegnamenti = insegnamenti;
+    })
+  }
   addStudente(nomecorso,nome,cognome,email,password,data,indirizzo, matricola, idcorso) {
     this.listaCorsi();
-    console.log(nomecorso)
     for(var i=0; i<this.corsi.length; i++){
       if(this.nomecorso==this.corsi[i].nome)
         idcorso=this.corsi[i].idCorso
     }
-    console.log(idcorso);
-    this.fireAuth.auth.createUserWithEmailAndPassword(this.email.value,this.password.value).then(data =>{ 
-      console.log(data)
+/*     this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{ 
       this.showAlert('Registrazione eseguita con successo');
       this.navCtrl.push(HomePage);
     }).catch(err =>{
-      console.log(err.message)
       this.showAlert(err.message);
-    })
+    }) */
     this.studenteProvider.saveStudente({nome,cognome,email,password,data,indirizzo,matricola,idcorso} as Studente).subscribe(studente => {
-      console.log(this.studente);
+      this.showAlert('Studente aggiunto con successo');
+      this.navCtrl.push(SegreteriadidatticaPage);
+
     });
   }
 
 
-  addDocente(name,surname,email,password,data,indirizzo, stipendio) {
-    this.fireAuth.auth.createUserWithEmailAndPassword(this.email.value,this.password.value).then(data =>{ 
-      console.log(data)
+  addDocente(nome,cognome,email,password,data,indirizzo, stipendio) {
+    /* this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{ 
       this.showAlert('Registrazione eseguita con successo');
-      this.navCtrl.push(HomePage);
     }).catch(err =>{
       console.log(err.message)
       this.showAlert(err.message);
-    })
-    this.docenteProvider.saveDocente({name,surname,email,password,data,indirizzo,stipendio} as Docente).subscribe(docente => {
-      console.log(this.docente);
+    }) */
+    this.docenteProvider.saveDocente({nome,cognome,email,password,data,indirizzo,stipendio} as Docente).subscribe(docente => {
+      this.showAlert('Docente aggiunto con successo');
+      this.navCtrl.push(SegreteriadidatticaPage);
     });
   }
 
   addAula(nome,grandezza){
     this.aulaProvider.saveAula({nome,grandezza} as Aula).subscribe(aula => {
       this.showAlert('Aula aggiunta con successo');
-      this.navCtrl.push(HomePage);
+      this.navCtrl.push(SegreteriadidatticaPage);
     })
   }
 
-  addStrumento(nome,aula,agibile,idAula){
+  addStrumento(nome,aula,funzionante,idAula){
     for(var i=0; i<this.aule.length; i++){
-      console.log(aula);
-      agibile=1;
+      funzionante=1;
       if(aula==this.aule[i].nome)
-        console.log(aula);
         idAula=this.aule[i].idAula;
-        console.log(this.aule[i].idAula);
-        this.strumentoProvider.saveStrumento({nome,idAula,agibile} as Strumento).subscribe(strumento => {
+        console.log(idAula);
+        this.strumentoProvider.saveStrumento({nome,idAula,funzionante} as Strumento).subscribe(strumento => {
+          this.showAlert('Strumento aggiunta con successo');
+          this.navCtrl.push(SegreteriadidatticaPage);
         });
       }
 
   }
+
+  addCalendario(item){
+    this.navCtrl.push(CalendarioPage,{param:item})
+  }
+
+
+  getItems(ev: any) {
+    const val = ev.target.value;
+    if (val && val.trim() != '') {
+      console.log(val);
+        this.insegnamenti = this.insegnamenti.filter((item) => {
+          console.log(item);
+          return (item.nome.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+        })
+    }
+    else{
+      this.listaInsegnamenti();
+    }
+  }
+
 
   showAlert(message : string) {
     let alert = this.alertCtrl.create({
@@ -201,4 +225,11 @@ export class AggiungiPage {
     });
     alert.present();
   }
+  
+
+
+
+
+
+
 }

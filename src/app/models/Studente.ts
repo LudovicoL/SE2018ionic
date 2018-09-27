@@ -1,4 +1,5 @@
 export interface Studente{
+    idStudente:number,
     nome:string,
     cognome:string,
     email?:string,
@@ -8,6 +9,7 @@ export interface Studente{
     matricola?: number,
     idcorso?: number,
     hide?:boolean,
-    abilitazione:number
-
+    abilitazione:number,
+    idUtente:number,
+    abilit:string
 }

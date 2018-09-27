@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +18,14 @@ import { DocenteProvider } from '../providers/docente/docente';
 import { InsegnamentoProvider } from '../providers/insegnamento/insegnamento';
 import { AulaProvider } from '../providers/aula/aula';
 import { StrumentoProvider } from '../providers/strumento/strumento';
+import { SegnalazioneProvider } from '../providers/segnalazione/segnalazione';
+import { NgCalendarModule  } from 'ionic2-calendar';
+import { CalendarModule } from 'ionic3-calendar-en';
+import { FormsModule } from '@angular/forms';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
+import { CalendarioPage } from '../pages/calendario/calendario';
+import { LezioneProvider } from '../providers/lezione/lezione';
+
 
 var config = {
   apiKey: "AIzaSyC1KuYsDGX-yOKlYes7z07VldAdiTVrBZ0",
@@ -36,14 +43,19 @@ var config = {
     CiaoPage,
     LoginPage,
     SegreteriadidatticaPage,
-    CorsoPage
+    CorsoPage,
+    CalendarioPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    NgCalendarModule,
+    CalendarModule,
+    FormsModule,
+    MyDateRangePickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,7 +64,8 @@ var config = {
     LoginPage,
     CiaoPage,
     SegreteriadidatticaPage,
-    CorsoPage
+    CorsoPage,
+    CalendarioPage
   ],
   providers: [
     StatusBar,
@@ -63,7 +76,9 @@ var config = {
     DocenteProvider,
     InsegnamentoProvider,
     AulaProvider,
-    StrumentoProvider
+    StrumentoProvider,
+    SegnalazioneProvider,
+    LezioneProvider
   ]
 })
 export class AppModule {}

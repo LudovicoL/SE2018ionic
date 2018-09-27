@@ -168,6 +168,12 @@
             </ion-select>
         </ion-item>
         <ion-item>
+        <ion-label>Docente</ion-label>
+        <ion-select [(ngModel)]="nomedocente">
+          <ion-option *ngFor="let d of docenti">{{d.nome}}</ion-option>
+        </ion-select>
+    </ion-item>
+        <ion-item>
           <ion-label>anno         </ion-label>
           <ion-select [(ngModel)]="anno">
             <ion-option *ngFor="let number of [1,2,3]">{{number}}</ion-option>
@@ -186,13 +192,13 @@
           </ion-select>
       </ion-item>
         
-      <button ion-button full color='light' (click)="addInsegnamento(nomecorso,nome.value,cfu,anno,semestre)">Aggiungi insegnamento</button>
+      <button ion-button full color='light' (click)="addInsegnamento(nomecorso,nome.value,cfu,anno,semestre,nomedocente)">Aggiungi insegnamento</button>
       </ion-list>
     </div>
 
     <div *ngIf="Aula">
       <ion-list>
-        <p>INSEGNAMENTO</p>
+        <p>AULA</p>
         <ion-item>
           <ion-label>nome      </ion-label>
             <ion-input type = "text" #nome>      
@@ -232,4 +238,15 @@
       </ion-list>
     </div>
 
+
+    <div *ngIf="Calendario">
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-list>
+          <ion-label (click)="addCalendario(item)" *ngFor="let item of insegnamenti">
+            NOME:{{ item.nome }} <br>CORSO:{{item.nomeCorso}}
+          </ion-label>
+        </ion-list>
+      </div>
+
+      
 </ion-content>
