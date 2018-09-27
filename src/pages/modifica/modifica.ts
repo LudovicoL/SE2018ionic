@@ -28,7 +28,7 @@ export class ModificaPage {
   strumentazioni:Strumento[];
   studenti:Studente[];
   docenti:Docente[];
-
+  nomeaula:string;
   searchQuery: string = '';
   items: any[];
   items1:any[];
@@ -101,8 +101,8 @@ export class ModificaPage {
     }
     if(this.Strumentoo==true){
       this.strumentoProvider.getStrumento().subscribe(strumentazioni=>{
-        this.items = strumentazioni;
-      });
+      this.items = strumentazioni;
+        });
     }
     if(this.Studentee==true){
       this.studenteProvider.getStudente().subscribe(studenti=>{
@@ -119,31 +119,32 @@ export class ModificaPage {
     console.log(id);
     this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome, param2:durata,param3:facolta,param4:livello,param5:id,param6:abilitazione})
   }
-  modificaInsegnamento(item){
-
-    console.log(item)
+  modificaInsegnamento(page,idInsegnamento,nome,cfu,semestre,anno,nomedocente,nomecorso){
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:idInsegnamento, param2:nome,param3:cfu,param4:semestre,param5:nomedocente,param6:nomecorso,param7:anno})
+    console.log(semestre);
   }
 
-  modificaAula(page, nome, grandezza,latitudine,longitudine,id){
-    console.log(id);
-    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome, param2:grandezza,param3:latitudine,param4:longitudine,param5:id})
+  modificaAula(page, nome, grandezza,latitudine,longitudine,idAula){
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome, param2:grandezza,param3:latitudine,param4:longitudine,param5:idAula})
   }
 
-  modificaStrumentazione(page,nome,abilitazione,idStrumento){
+  modificaStrumentazione(page,nome,funzionante,idStrumento,idAula){
     console.log(nome)
-    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome,param2:abilitazione,param3:idStrumento})
+    this.aulaProvider.getAulaById(idAula).subscribe(aula => {
+      this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome,param2:funzionante,param3:idStrumento,param4:aula.nome})
+      console.log(aula.nome);
+    });    
 
   }
 
-  modificaStudente(item){
-
-    console.log(item)
+  modificaStudente(page,nome,cognome,matricola,email,indirizzo,idUtente){
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome,param2:cognome,param3:matricola,param4:email,param5:indirizzo,param6:idUtente})
   }
 
-  modificaDocente(item){
-
-    console.log(item)
+  modificaDocente(page,nome,cognome,stipendio,email,indirizzo,idUtente,idDocente){
+    this.navCtrl.push('UpdatePage',{paramNome:page, param1:nome,param2:cognome,param3:stipendio,param4:email,param5:indirizzo,param6:idUtente,param7:idDocente})
   }
+
 
   getItems(ev: any) {
     const val = ev.target.value;
@@ -166,4 +167,10 @@ export class ModificaPage {
       this.initializeItems();
     }
   }
+  nameaula(idAula){
+    this.aulaProvider.getAulaById(idAula).subscribe(aula => {
+      return aula.nome;
+      });
+  }
+
 }

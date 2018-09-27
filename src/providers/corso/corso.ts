@@ -16,6 +16,7 @@ export class CorsoProvider {
   corsogetUrl: string = 'http://localhost:8080/SE2018/corso/getAll'
   corsosaveUrl: string = 'http://localhost:8080/SE2018/corso/save'
   updateUrl:string= 'http://localhost:8080/SE2018/corso/update'
+  updateabilitazioneUrl:string='http://localhost:8080/SE2018/corso/updateabilitazione'
   constructor(public http: HttpClient) {
     console.log('Hello CorsoProvider Provider');
   }
@@ -31,4 +32,9 @@ export class CorsoProvider {
   update(corso:Corso): Observable<Corso>{
     return this.http.patch<Corso>(this.updateUrl, corso, {headers});
   }
+
+  updateabilitazione(corso:Corso): Observable<Corso>{
+    return this.http.patch<Corso>(this.updateabilitazioneUrl, corso, {headers});
+  }
+
 }

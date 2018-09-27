@@ -15,8 +15,9 @@ const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 export class StrumentoProvider {
   strumentosaveUrl: string = 'http://localhost:8080/SE2018/strumento/save'
   strumentogetUrl:string= 'http://localhost:8080/SE2018/strumento/getAll'
-  strumentogetByIdAulaUrl:string="http://localhost:8080/SE2018/strumento/getByAulaId"
-  updateUrl:string="http://localhost:8080/SE2018/strumento/update"
+  strumentogetByIdAulaUrl:string='http://localhost:8080/SE2018/strumento/getByAulaId'
+  updateUrl:string='http://localhost:8080/SE2018/strumento/update'
+  deleteUrl:string='http://localhost:8080/SE2018/strumento/delete'
   constructor(public http: HttpClient) {
     console.log('Hello StrumentoProvider Provider');
   }
@@ -35,5 +36,9 @@ export class StrumentoProvider {
 
   update(strumento:Strumento): Observable<Strumento>{
     return this.http.patch<Strumento>(this.updateUrl, strumento, {headers});
+  }
+
+  delete(idStrumento:Response):Observable<Response>{
+    return this.http.delete<Response>(this.deleteUrl + '/' + idStrumento);
   }
 }

@@ -1,25 +1,21 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the CiaoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-ciao',
-  templateUrl: 'ciao.html',
+  templateUrl: 'ciao.html'
 })
 export class CiaoPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  data:string;
+ 
+  onDaySelect(event: any) {
+    console.log(event);
+    this.data=(event.year+"-"+event.month+"-"+event.date)
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CiaoPage');
+  addlezione(inizio:any,fine){
+    console.log(this.data)
+    this.data=(this.data+" "+inizio)
+    console.log(this.data)
   }
-
 }
