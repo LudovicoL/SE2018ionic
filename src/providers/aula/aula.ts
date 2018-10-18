@@ -19,6 +19,7 @@ export class AulaProvider {
   aulagetByIdUrl:string='http://localhost:8080/SE2018/aula/getById'
   updateUrl:string='http://localhost:8080/SE2018/aula/update'
   deleteUrl:string='http://localhost:8080/SE2018/aula/delete'
+  aulelibereUrl:string='http://localhost:8080/SE2018/aula/aulelibere'
   constructor(public http: HttpClient) {
     console.log('Hello AulaProvider Provider');
   }
@@ -45,5 +46,9 @@ export class AulaProvider {
 
   delete(idAula:Response):Observable<Response>{
     return this.http.delete<Response>(this.deleteUrl + '/' + idAula);
+  }
+
+  aulelibere(data1:Date,data2:Date):Observable<Aula[]>{
+    return this.http.get<Aula[]>(this.aulelibereUrl + '/' + data1 + '/' + data2);
   }
 }

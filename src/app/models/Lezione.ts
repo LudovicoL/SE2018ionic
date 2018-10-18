@@ -1,8 +1,12 @@
+import {DateTime} from "ionic-angular";
+
 export interface Lezione{
-    datainizio:string
-    datafine:string,
+    datainizio:Date,
+    datafine:Date,
     idInsegnamento:number,
     idAula:number,
     abilitazione:number,
-    idLezione:number
+    idLezione:number,
+    nomeInsegnamento:string,
+    nomeaula:string
 }
