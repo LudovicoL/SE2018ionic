@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { CalendarioPage } from '../pages/calendario/calendario';
 import { LezioneProvider } from '../providers/lezione/lezione';
+import {DocentePage} from "../pages/docente/docente";
 
 
 var config = {
@@ -44,7 +45,8 @@ var config = {
     LoginPage,
     SegreteriadidatticaPage,
     CorsoPage,
-    CalendarioPage
+    CalendarioPage,
+    DocentePage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ var config = {
     NgCalendarModule,
     CalendarModule,
     FormsModule,
-    MyDateRangePickerModule
+    MyDateRangePickerModule,
+    NgCalendarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,7 +68,8 @@ var config = {
     CiaoPage,
     SegreteriadidatticaPage,
     CorsoPage,
-    CalendarioPage
+    CalendarioPage,
+    DocentePage
   ],
   providers: [
     StatusBar,

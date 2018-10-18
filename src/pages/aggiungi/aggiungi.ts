@@ -157,11 +157,10 @@ export class AggiungiPage {
     }) */
     this.studenteProvider.saveStudente({nome,cognome,email,password,data,indirizzo,matricola,idcorso} as Studente).subscribe(studente => {
       this.showAlert('Studente aggiunto con successo');
-      this.navCtrl.push(SegreteriadidatticaPage);
+      this.navCtrl.push("SegreteriadidatticaPage");
 
     });
   }
-
 
   addDocente(nome,cognome,email,password,data,indirizzo, stipendio) {
     /* this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{ 
@@ -172,14 +171,14 @@ export class AggiungiPage {
     }) */
     this.docenteProvider.saveDocente({nome,cognome,email,password,data,indirizzo,stipendio} as Docente).subscribe(docente => {
       this.showAlert('Docente aggiunto con successo');
-      this.navCtrl.push(SegreteriadidatticaPage);
+      this.navCtrl.push("SegreteriadidatticaPage");
     });
   }
 
   addAula(nome,grandezza){
     this.aulaProvider.saveAula({nome,grandezza} as Aula).subscribe(aula => {
       this.showAlert('Aula aggiunta con successo');
-      this.navCtrl.push(SegreteriadidatticaPage);
+      this.navCtrl.push("SegreteriadidatticaPage");
     })
   }
 
@@ -191,16 +190,15 @@ export class AggiungiPage {
         console.log(idAula);
         this.strumentoProvider.saveStrumento({nome,idAula,funzionante} as Strumento).subscribe(strumento => {
           this.showAlert('Strumento aggiunta con successo');
-          this.navCtrl.push(SegreteriadidatticaPage);
+          this.navCtrl.push("SegreteriadidatticaPage");
         });
       }
 
   }
 
   addCalendario(item){
-    this.navCtrl.push(CalendarioPage,{param:item})
+    this.navCtrl.push(CalendarioPage,{param:item,paramNome:"Segreteriadidattica"})
   }
-
 
   getItems(ev: any) {
     const val = ev.target.value;
@@ -216,7 +214,6 @@ export class AggiungiPage {
     }
   }
 
-
   showAlert(message : string) {
     let alert = this.alertCtrl.create({
       title: 'Registrazione!',
@@ -225,11 +222,5 @@ export class AggiungiPage {
     });
     alert.present();
   }
-  
-
-
-
-
-
 
 }
