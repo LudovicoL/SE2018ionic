@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Segnalazione } from '../../app/models/Segnalazione';
 import { Observable } from 'rxjs';
+import {Docente} from "../../app/models/Docente";
 
 /*
   Generated class for the SegnalazioneProvider provider.
@@ -16,7 +17,7 @@ export class SegnalazioneProvider {
   segnalazionegetUrl:string='http://localhost:8080/SE2018/segnalazione/getAll'
   updateUrl:string='http://localhost:8080/SE2018/segnalazione/update'
   deleteUrl:string='http://localhost:8080/SE2018/segnalazione/delete'
-
+  segnalazionesaveUrl:string='http://localhost:8080/SE2018/segnalazione/save'
 
   constructor(public http: HttpClient) {
     console.log('Hello SegnalazioneProvider Provider');
@@ -32,5 +33,9 @@ export class SegnalazioneProvider {
 
   delete(idSegnalazione:Response):Observable<Response>{
     return this.http.delete<Response>(this.deleteUrl + '/' + idSegnalazione);
+  }
+
+  save(segnalazione: Segnalazione): Observable<Segnalazione>{
+    return this.http.post<Segnalazione>(this.segnalazionesaveUrl, segnalazione, {headers});
   }
 }

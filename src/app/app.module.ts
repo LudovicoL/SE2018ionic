@@ -26,6 +26,7 @@ import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { CalendarioPage } from '../pages/calendario/calendario';
 import { LezioneProvider } from '../providers/lezione/lezione';
 import {DocentePage} from "../pages/docente/docente";
+import {EventModalPage} from "../pages/event-modal/event-modal";
 
 
 var config = {
@@ -46,7 +47,8 @@ var config = {
     SegreteriadidatticaPage,
     CorsoPage,
     CalendarioPage,
-    DocentePage
+    DocentePage,
+    EventModalPage
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ var config = {
     SegreteriadidatticaPage,
     CorsoPage,
     CalendarioPage,
-    DocentePage
+    DocentePage,
+    EventModalPage
   ],
   providers: [
     StatusBar,

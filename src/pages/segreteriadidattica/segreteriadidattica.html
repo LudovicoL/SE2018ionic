@@ -3,18 +3,22 @@
     <ion-title>Segreteria Didattica</ion-title>
   </ion-navbar>
 
-  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="menu">
+  <ion-toolbar no-border-top color="light">
+    <ion-segment [(ngModel)]="menu" color="dark">
       <ion-segment-button value="aggiungi">
+        <ion-icon  name="add" color="primary" item-start></ion-icon>
         Aggiungi
       </ion-segment-button>
       <ion-segment-button value="modifica">
+        <ion-icon  name="create" color="primary" item-start></ion-icon>
         Modifica
       </ion-segment-button>
       <ion-segment-button value="cancella">
+        <ion-icon  name="trash" color="primary" item-start></ion-icon>
         Cancella
       </ion-segment-button>
       <ion-segment-button value="segnalazione">
+        <ion-icon  name="bookmark" color="primary" item-start></ion-icon>
         Segnalazioni
       </ion-segment-button>
     </ion-segment>
@@ -27,8 +31,12 @@
     <ion-list *ngSwitchCase="'aggiungi'">
       <ion-list>
         <button ion-item *ngFor="let i of items" (click)="aggiungi(i.title)" icon-start>
-          <ion-icon name="add" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+          <ion-icon  [name]="i.icon"  [ngStyle]="{'color': i.color}" item-start></ion-icon>
           {{ i.title }}
+        </button>
+        <button ion-item (click)="aggiungi('Calendario')" icon-start>
+          <ion-icon  name="calendar" color="dark" item-start></ion-icon>
+          Calendario
         </button>
       </ion-list>
     </ion-list>
@@ -36,7 +44,7 @@
     <ion-list *ngSwitchCase="'modifica'">
         <ion-list>
           <button ion-item *ngFor="let i of items" (click)="modifica(i.title)" icon-start>
-            <ion-icon name="create" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+            <ion-icon [name]="i.icon"  [ngStyle]="{'color': i.color}" item-start></ion-icon>
             {{ i.title }}
           </button>
         </ion-list>
@@ -45,29 +53,29 @@
       <ion-list *ngSwitchCase="'cancella'">
           <ion-list>
             <button ion-item *ngFor="let i of items" (click)="cancella(i.title)" icon-start>
-              <ion-icon name="remove" [ngStyle]="{'color': i.color}" item-start></ion-icon>
+              <ion-icon  [name]="i.icon"  [ngStyle]="{'color': i.color}" item-start></ion-icon>
               {{ i.title }}
             </button>
           </ion-list>
         </ion-list>
 
         <ion-list *ngSwitchCase="'segnalazione'">
-            <ion-list>
-              <ion-label *ngFor="let item of items1"  icon-start>
-                  <ion-item>
-                    <ion-icon name="bookmarks" item-start></ion-icon>
-                      Descrizione:{{ item.descrizione }} <br> Stato:{{item.stato}}
-                    <button item-end (click)="modificaSegnalazione(item.idSegnalazione)" ion-button color="dark" round icon-start>
-                      <ion-icon name='construct' is-active="false"></ion-icon>                
-                    </button>
-                    <button item-end (click)="cancellaSegnalazione(item.idSegnalazione)" ion-button color="dark" round icon-start>
-                        <ion-icon name='trash' is-active="false"></ion-icon>
-                      </button>
-                </ion-item>
-              </ion-label>
-            </ion-list>
+              <ion-item *ngFor="let item of items1"  icon-start>
+                <ion-icon name="bookmarks" item-start></ion-icon>
+                  DOCENTE:{{ item.nomedocente }} <br> AULA:{{ item.nomeaula}} <br> STATO:{{item.stato}}
+                <button item-end (click)="show(item.nomeaula,item.descrizione)" ion-button color="primary" round icon-start>
+                  <ion-icon name='information-circle' is-active="false"></ion-icon>
+                </button>
+                <button item-end (click)="modificaSegnalazione(item.idSegnalazione,item.descrizione)" ion-button color="primary" round icon-start>
+                  <ion-icon name='construct' is-active="false"></ion-icon>
+                </button>
+                <button item-end (click)="cancellaSegnalazione(item.idSegnalazione)" ion-button color="primary" round icon-start>
+                  <ion-icon name='trash' is-active="false"></ion-icon>
+                </button>
+              </ion-item>
           </ion-list>
   </div>
 </ion-content>
 
+information-circle
 

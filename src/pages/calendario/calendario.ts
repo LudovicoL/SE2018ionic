@@ -33,6 +33,17 @@ export class CalendarioPage {
   data1=new Date();
   data2=new Date();
 
+
+  eventSource;
+  viewTitle;
+  isToday: boolean;
+  calendar = {
+    mode: 'month',
+    currentDate: new Date()
+  };
+  datainiziolezione: Date;
+  datafinelezione:Date;
+
   constructor(public alertCtrl : AlertController, private aulaProvider: AulaProvider, private lezioneProvider: LezioneProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.param = navParams.get('param');
     this.parameter = navParams.get('paramNome');
@@ -47,6 +58,12 @@ export class CalendarioPage {
 
       case "Docente":
         this.Docenteee = true;
+        this.datainizio=new Date(2018,6,1, 0,0,0);
+        this.datafine=new Date(2018,11,29,0,0,0);
+        this.param=1;
+        this.lezioneProvider.lezioneDocente(this.datainizio, this.datafine,this.param).subscribe(lezioni => {
+          this.lessons = lezioni;
+        })
         break;
 
       case "Studente":
@@ -59,38 +76,10 @@ export class CalendarioPage {
     console.log('ionViewDidLoad CalendarioPage');
   }
 
-  onDaySelect(event: any) {
-    this.data1=new Date(event.year,event.month,event.date);
-    this.data2=new Date(event.year,event.month,event.date);
-    //this.datainizio1=(event.year+"-"+event.month+"-"+event.date)
-    //this.datafine1=(event.year+"-"+event.month+"-"+event.date)
-    this.enabled="enable"
-  }
-
-  onDayDocenteSelect(event: any) {
-
-    this.data1=new Date(event.year,event.month,event.date);
-    this.data2=new Date(event.year,event.month,event.date);
-    this.appoiment="00:00"
-    this.appoiment1="23:59"
-    var parts =this.appoiment.split(':');
-    this.datainizio=new Date(this.data1.getFullYear(),this.data1.getMonth(),this.data1.getDate(),parts[0],parts[1]);
-    var parts =this.appoiment1.split(':');
-    this.datafine=new Date(this.data2.getFullYear(),this.data2.getMonth(),this.data2.getDate(),parts[0],parts[1]);
-    this.lezioneProvider.lezioneDocente(this.datainizio,this.datafine,this.param).subscribe(lezioni =>{
-      this.lessons=lezioni;
-      //console.log(this.lessons[0].datainizio.getMonth().toString())
-    });
-    this.enabled="enable"
-  }
-
   dateChanged1(){
     var parts =this.appoiment.split(':');
     this.datainizio=new Date(this.data1.getFullYear(),this.data1.getMonth(),this.data1.getDate(),parts[0],parts[1]);
     console.log(this.data1)
-    //this.datainizio=(this.datainizio1+" "+this.appoiment);
-
-
     if(this.datafine){
       this.aulelibere(this.datainizio, this.datafine);
     }
@@ -136,12 +125,84 @@ export class CalendarioPage {
 
   showAlert(message : string) {
     let alert = this.alertCtrl.create({
-      title: 'Registrazione!',
+      title: 'Calendario!',
       subTitle: message,
       buttons: ['OK']
     });
     alert.present();
   }
 
+
+  loadEvents() {
+    this.eventSource = this.createRandomEvents();
+  }
+
+  onViewTitleChanged(title) {
+    this.viewTitle = title;
+  }
+
+  onEventSelected(event) {
+    console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title + ',' + event.nomeaula);
+  }
+
+  changeMode(mode) {
+    this.calendar.mode = mode;
+  }
+
+  today() {
+    this.calendar.currentDate = new Date();
+  }
+
+  onTimeSelected(ev) {
+    this.enabled="enable"
+    this.data1=new Date(ev.selectedTime)
+    this.data2=new Date(ev.selectedTime);
+  }
+
+  onCurrentDateChanged(event: Date) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    event.setHours(0, 0, 0, 0);
+    this.isToday = today.getTime() === event.getTime();
+  }
+
+  createRandomEvents() {
+
+    var events = [];
+
+      console.log(this.lessons.length)
+      for(var i=0;i<this.lessons.length;i++) {
+        console.log(this.lessons[i].datainizio);
+        this.datainiziolezione = new Date(this.lessons[i].datainizio)
+        this.datafinelezione = new Date(this.lessons[i].datafine)
+        console.log(this.datainiziolezione)
+        console.log(this.datafinelezione)
+        var startTime;
+        var endTime;
+        startTime = new Date(this.datainiziolezione);
+        console.log(startTime)
+        endTime = new Date(this.datafinelezione);
+        if(this.Docenteee==true){
+          events.push({
+            title: this.lessons[i].nomeInsegnamento + ' AULA:' + this.lessons[i].nomeaula,
+            startTime: startTime,
+            endTime: endTime,
+            allDay: false
+          });
+        }
+        if(this.Segreteriadidattica==true){
+          events.push({
+            title:' AULA:' + this.lessons[i].nomeaula,
+            startTime: startTime,
+            endTime: endTime,
+            allDay: false
+          });
+        }
+
+      }
+
+    return events;
+
+  }
 
 }

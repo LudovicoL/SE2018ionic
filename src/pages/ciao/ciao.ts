@@ -37,7 +37,7 @@ export class CiaoPage {
   }
 
   onEventSelected(event) {
-    console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+    console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title + ',' + event.nomeaula);
   }
 
   changeMode(mode) {
@@ -68,43 +68,23 @@ export class CiaoPage {
     this.lezioneProvider.lezioneDocente(this.datainizio, this.datafine,this.param).subscribe(lezioni =>{
       this.lessons=lezioni;
       console.log(this.lessons.length)
-      //console.log(this.lessons[0].datainizio.getMonth().toString())
       for(var i=0;i<this.lessons.length;i++) {
         console.log(this.lessons[i].datainizio);
         this.datainiziolezione = new Date(this.lessons[i].datainizio)
         this.datafinelezione = new Date(this.lessons[i].datafine)
         console.log(this.datainiziolezione)
         console.log(this.datafinelezione)
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        //var startDay = i;
-        //console.log(startDay)
-        //var endDay =i+1;
         var startTime;
         var endTime;
-        //if (eventType === 0) {
         startTime = new Date(this.datainiziolezione);
         console.log(startTime)
-
         endTime = new Date(this.datafinelezione);
         events.push({
-          title: 'Robotica ',
+          title: this.lessons[i].nomeInsegnamento + ' AULA:' + this.lessons[i].nomeaula,
           startTime: startTime,
           endTime: endTime,
           allDay: false
         });
-        /*} else {
-          var startMinute = Math.floor(Math.random() * 24 * 60);
-          var endMinute = Math.floor(Math.random() * 180) + startMinute;
-          startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-          endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-          events.push({
-            title: 'Event - ' + i,
-            startTime: startTime,
-            endTime: endTime,
-            allDay: false
-          });
-        }*/
       }
 
     });
