@@ -33,7 +33,7 @@ export class DeletePage {
   parameter: string;
   course:string;
   items: any[];
-  attivo:boolean;
+  icon:string;
 
   constructor(public alertCtrl: AlertController,public modalCtrl: ModalController,private aulaProvider: AulaProvider,private strumentoProvider: StrumentoProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private studenteProvider: StudenteProvider, private corsoProvider: CorsoProvider,public navCtrl: NavController, public navParams: NavParams) {
 
@@ -78,31 +78,37 @@ export class DeletePage {
     if(this.Corsoo==true){
       this.corsoProvider.getCorso().subscribe(corsi=>{
         this.items = corsi;
+        this.icon="school";
       });
     }
     if(this.Insegnamentoo==true){
       this.insegnamentoProvider.getInsegnamento().subscribe(insegnamenti => {
         this.items = insegnamenti;
+        this.icon="book";
       });
     }
     if(this.Aulaa==true){
       this.aulaProvider.getAula().subscribe(aule=>{
         this.items = aule;
+        this.icon="home";
       });
     }
     if(this.Strumentoo==true){
       this.strumentoProvider.getStrumento().subscribe(strumentazioni=>{
       this.items = strumentazioni;
-        });
+        this.icon="build";
+      });
     }
     if(this.Studentee==true){
       this.studenteProvider.getStudente().subscribe(studenti=>{
         this.items = studenti;
+        this.icon="person";
       });
     }
     if(this.Docentee==true){
       this.docenteProvider.getDocente().subscribe(docenti=>{
         this.items = docenti;
+        this.icon="person";
       });
     }
   }
@@ -113,14 +119,15 @@ export class DeletePage {
   getItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim() != '') {
-      if(this.Studentee==true){
+      if (this.Studentee == true) {
         this.items = this.items.filter((item) => {
-          return (item.matricola.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+          return (item.matricola.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1 || item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.cognome.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
-      else{
+      else {
         this.items = this.items.filter((item) => {
-          return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.cognome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+
         })
       }
     }

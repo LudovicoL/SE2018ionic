@@ -15,50 +15,64 @@
 <ion-content padding>
 
     <div *ngIf="Corsoo">
+      <ion-list>
+
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-        <ion-list>
-          <ion-label (click)="modificaCorso('ModificaCorso',item.nome,item.facolta,item.durata,item.livello,item.idCorso,item.abilitazione)" *ngFor="let item of items">
-            {{ item.nome }}
-          </ion-label>
+          <ion-item (click)="modificaCorso('ModificaCorso',item.nome,item.facolta,item.durata,item.livello,item.idCorso,item.abilitazione)" *ngFor="let item of items" icon-start>
+            <ion-icon [name]="icon" item-start></ion-icon>
+            NOME CORSO:{{ item.nome }}
+          </ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Insegnamentoo">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-label (click)="modificaInsegnamento('ModificaInsegnamento',item.idInsegnamento,item.nome,item.cfu,item.semestre,item.anno,item.nomeDocente,item.nomeCorso)" *ngFor="let item of items">
+          <ion-item (click)="modificaInsegnamento('ModificaInsegnamento',item.idInsegnamento,item.nome,item.cfu,item.semestre,item.anno,item.nomeDocente,item.nomeCorso)" *ngFor="let item of items" icon-start>
+            <ion-icon [name]="icon" item-start></ion-icon>
             NOME:{{ item.nome }} <br>CORSO:{{item.nomeCorso}}
-          </ion-label>
+          </ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Aulaa">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-label (click)="modificaAula('ModificaAula',item.nome, item.grandezza, item.latitudine, item.longitudine,item.idAula)" *ngFor="let item of items">
+          <ion-item (click)="modificaAula('ModificaAula',item.nome, item.grandezza, item.latitudine, item.longitudine,item.idAula)" *ngFor="let item of items" icon-start>
+            <ion-icon [name]="icon" item-start></ion-icon>
             {{ item.nome }}
-          </ion-label>
+          </ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Strumentoo">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>    
-          <ion-item (click)="modificaStrumentazione('ModificaStrumento',item.nome,item.funzionante,item.idStrumento,item.idAula)" *ngFor="let item of items">Nome:  {{ item.nome }} &emsp;<br>Aula:  {{ item.nomeaula }} &emsp;</ion-item>
+          <ion-item (click)="modificaStrumentazione('ModificaStrumento',item.nome,item.funzionante,item.idStrumento,item.idAula)" *ngFor="let item of items" icon-start>
+            <ion-icon [name]="icon" item-start></ion-icon>
+            Nome:  {{ item.nome }} &emsp;<br>Aula:  {{ item.nomeaula }} &emsp;</ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Studentee">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-item (click)="modificaStudente('ModificaStudente',item.nome,item.cognome,item.matricola,item.email,item.indirizzo,item.idUtente)" *ngFor="let item of items">MATRICOLA:{{ item.matricola }}<br>NOME:{{ item.nome }}<br>COGNOME{{ item.cognome }}</ion-item>
+          <ion-label>LISTA STUDENTI</ion-label>
+          <ion-item (click)="modificaStudente('ModificaStudente',item.nome,item.cognome,item.matricola,item.email,item.indirizzo,item.idUtente)" *ngFor="let item of items" icon-start>
+            <ion-icon [name]="icon" item-start></ion-icon>
+            MATRICOLA:{{item.matricola}} <br> {{ item.nome }} {{item.cognome}} <br> STATO:{{item.abilit}} <br>
+          </ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="Docentee">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-            <ion-item (click)="modificaDocente('ModificaDocente',item.nome,item.cognome,item.stipendio,item.email,item.indirizzo,item.idUtente,item.idDocente)" *ngFor="let item of items">NOME:{{ item.nome }}<br>COGNOME:{{ item.cognome }}</ion-item>
+          <ion-label>LISTA DOCENTI</ion-label>
+          <ion-item (click)="modificaDocente('ModificaDocente',item.nome,item.cognome,item.stipendio,item.email,item.indirizzo,item.idUtente,item.idDocente)" *ngFor="let item of items" icon-start>
+              <ion-icon [name]="icon" item-start></ion-icon>
+              {{ item.nome }} {{item.cognome}} <br>
+            </ion-item>
         </ion-list>
     </div>
 

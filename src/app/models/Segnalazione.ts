@@ -6,5 +6,8 @@ export interface Segnalazione{
 	idAula:number,
 	idSegreteria:number,
 	abilitazione:number,
-	stato:string
+	stato:string,
+  nomeaula:string,
+  nomedocente:string,
+  commento:string
 }

@@ -14,95 +14,85 @@
 
 <ion-content padding>
 
-    <div *ngIf="Corsoo">
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <div *ngIf="Corsoo">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
       <ion-list>
-          <ion-label *ngFor="let item of items">
-            <ion-item>
-            NOME:{{ item.nome }} <br> STATO:{{item.abilit}} <br>
-            <button item-end (click)="cancellaCorso(item.nome,item.idCorso)" ion-button color="dark" round icon-start>
-              <ion-icon name='construct' is-active="false"></ion-icon>
-              Cambia Stato
-            </button>
-          </ion-item>
-          </ion-label>
-        </ion-list>
-    </div>
+        <ion-item *ngFor="let item of items" icon-start>
+          <ion-icon [name]="icon"></ion-icon>
+          NOME:{{ item.nome }} <br> STATO:{{item.abilit}}
+          <button item-end (click)="cancellaCorso(item.nome,item.idCorso)" ion-button color="primary" round icon-start>
+          <ion-icon name='construct' is-active="false"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+  </div>
 
-    <div *ngIf="Insegnamentoo">
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-      <ion-list>
-          <ion-label *ngFor="let item of items">
-            <ion-item>
-            NOME:{{ item.nome }} <br> CORSO:{{item.nomeCorso}} <br> STATO:{{item.abilit}} <br>
-            <button item-end (click)="cancellaInsegnamento(item.nome,item.idInsegnamento)" ion-button color="dark" round icon-start>
-              <ion-icon name='construct' is-active="false"></ion-icon>
-              Cambia Stato
-            </button>
-            </ion-item>
-          </ion-label>
-        </ion-list>
-    </div>
+  <div *ngIf="Insegnamentoo">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let item of items" icon-start="">
+        <ion-icon [name]="icon"></ion-icon>
+        NOME:{{ item.nome }} <br> CORSO:{{item.nomeCorso}} <br> STATO:{{item.abilit}}
+        <button item-end (click)="cancellaInsegnamento(item.nome,item.idInsegnamento)" ion-button color="primary" round icon-start>
+          <ion-icon name='construct' is-active="false"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
 
-    <div *ngIf="Aulaa">
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-        <ion-list>
-          <ion-label  *ngFor="let item of items">
-            <ion-item>
-            {{ item.nome }}
-            <button item-end (click)="cancellaAula(item.idAula,item.nome)" ion-button color="dark" round icon-start>
-            <ion-icon name='trash' is-active="false"></ion-icon>
-              Elimina Aula
-            </button>
-            </ion-item>
-          </ion-label>
-        </ion-list>
-    </div>
+  <div *ngIf="Aulaa">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let item of items" icon-start="">
+        <ion-icon [name]="icon"></ion-icon>
+        {{ item.nome }}
+        <button item-end (click)="cancellaAula(item.idAula,item.nome)" ion-button color="primary" round icon-start>
+          <ion-icon name='trash' is-active="false"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
 
-    <div *ngIf="Strumentoo">
-        <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-        <ion-list>
-          <ion-label  *ngFor="let item of items">
-            <ion-item>
-            NOME:{{ item.nome }} <br> AULA:{{item.nomeaula}}
-            <button item-end (click)="cancellaStrumento(item.idStrumento,item.nome)" ion-button color="dark" round icon-start>
-            <ion-icon name='trash' is-active="false"></ion-icon>
-              Elimina Strumento
-            </button>
-            </ion-item>
-          </ion-label>
-        </ion-list>
-    </div>
+  <div *ngIf="Strumentoo">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let item of items" icon-start="">
+        <ion-icon [name]="icon"></ion-icon>
+        NOME:{{ item.nome }} <br> AULA:{{item.nomeaula}}
+        <button item-end (click)="cancellaStrumento(item.idStrumento,item.nome)" ion-button color="primary" round icon-start>
+          <ion-icon name='trash' item-start></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
 
-    <div *ngIf="Studentee">
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-          <ion-label *ngFor="let item of items">
-              <ion-item>
+  <div *ngIf="Studentee">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-label>LISTA STUDENTI</ion-label>
+      <ion-item *ngFor="let item of items" icon-start="">
+        <ion-icon [name]="icon" item-start></ion-icon>
+        MATRICOLA:{{item.matricola}} <br> STUDENTE:{{ item.nome }} {{item.cognome}} <br> STATO:{{item.abilit}} <br>
+        <button item-end (click)="cancellaStudente(item.nome,item.cognome,item.idUtente)" ion-button color="primary" round icon-left>
+          <ion-icon name='construct' is-active="false"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
 
-            NOME:{{ item.nome }} <br> Cognome:{{item.cognome}} <br> STATO:{{item.abilit}} <br>
-            <button item-end (click)="cancellaStudente(item.nome,item.cognome,item.idUtente)" ion-button color="dark" round icon-start>
-              <ion-icon name='construct' is-active="false"></ion-icon>
-              Cambia Stato
-            </button>
-          </ion-item>
-
-          </ion-label>
-    </div>
-
-    <div *ngIf="Docentee">
-      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-          <ion-label *ngFor="let item of items">
-              <ion-item>
-
-            NOME:{{ item.nome }} <br> Cognome:{{item.cognome}} <br> STATO:{{item.abilit}} <br>
-            <button item-end (click)="cancellaDocente(item.nome,item.cognome,item.idUtente)" ion-button color="dark" round icon-start>
-              <ion-icon name='construct' is-active="false"></ion-icon>
-              Cambia Stato
-            </button>
-          </ion-item>
-
-          </ion-label>
-    </div>
+  <div *ngIf="Docentee">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list>
+      <ion-label>LISTA DOCENTI</ion-label>
+      <ion-item *ngFor="let item of items" icon-start="">
+        <ion-icon [name]="icon" item-start></ion-icon>
+        {{ item.nome }} {{item.cognome}} <br> STATO:{{item.abilit}} <br>
+        <button item-end (click)="cancellaDocente(item.nome,item.cognome,item.idUtente)" ion-button color="primary" round icon-start>
+          <ion-icon name='construct' is-active="false"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  </div>
 
    
 </ion-content>

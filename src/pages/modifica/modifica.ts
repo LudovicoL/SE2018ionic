@@ -22,27 +22,19 @@ import { UpdatePage } from '../update/update';
 })
 export class ModificaPage {
   course:string;
-  corsi:Corso[];
-  insegnamenti:Insegnamento[];
   aule:Aula[];
-  strumentazioni:Strumento[];
-  studenti:Studente[];
-  docenti:Docente[];
   nomeaula:string;
-  searchQuery: string = '';
   items: any[];
-  items1:any[];
-
   Corsoo: boolean=false;
   Insegnamentoo: boolean=false;
   Aulaa: boolean=false;
   Strumentoo: boolean=false;
   Studentee: boolean=false;
   Docentee: boolean=false;
-
+  icon:string;
   parameter: string;
   nomecorso: string;
-  constructor(public modalCtrl: ModalController,private aulaProvider: AulaProvider,private strumentoProvider: StrumentoProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private studenteProvider: StudenteProvider, private corsoProvider: CorsoProvider,public alertCtrl : AlertController,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private aulaProvider: AulaProvider,private strumentoProvider: StrumentoProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private studenteProvider: StudenteProvider, private corsoProvider: CorsoProvider,public alertCtrl : AlertController,public navCtrl: NavController, public navParams: NavParams) {
     
     this.parameter = navParams.get('paramNome'); 
     this.course = navParams.data
@@ -51,31 +43,37 @@ export class ModificaPage {
       case "Corso":
         this.Corsoo= true;
         this.initializeItems();
+        this.icon="school";
       break;
     
       case "Insegnamento":
         this.Insegnamentoo=true;
         this.initializeItems();
+        this.icon="book";
         break;
 
       case "Aula":
         this.Aulaa=true;
         this.initializeItems();
+        this.icon="home";
       break;
 
       case "Strumento":
         this.Strumentoo=true;
         this.initializeItems();
+        this.icon="build";
         break;
 
       case "Studente":
         this.Studentee= true;
         this.initializeItems();
+        this.icon="person";
         break;
 
       case "Docente":
         this.Docentee= true;
         this.initializeItems();
+        this.icon="person";
         break;
     }
   }
@@ -87,6 +85,7 @@ export class ModificaPage {
     if(this.Corsoo==true){
       this.corsoProvider.getCorso().subscribe(corsi=>{
         this.items = corsi;
+
       });
     }
     if(this.Insegnamentoo==true){
@@ -149,17 +148,15 @@ export class ModificaPage {
   getItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim() != '') {
-      console.log(val);
-      if(this.Studentee==true){
+      if (this.Studentee == true) {
         this.items = this.items.filter((item) => {
-          console.log(item);
-          return (item.matricola.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1);
+          return (item.matricola.toString().toLowerCase().indexOf(val.toString().toLowerCase()) > -1 || item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.cognome.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
-      else{
+      else {
         this.items = this.items.filter((item) => {
-          console.log(item);
-          return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          return (item.nome.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.cognome.toLowerCase().indexOf(val.toLowerCase()) > -1);
+
         })
       }
     }

@@ -2,14 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { SegreteriadidatticaPage } from '../segreteriadidattica/segreteriadidattica';
-import { MenuPage } from '../menu/menu';
+import {DocentePage} from "../docente/docente";
 
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,6 +20,9 @@ export class HomePage {
   }
   segreteriadidattica(){
     this.navCtrl.push(SegreteriadidatticaPage);
+  }
+  docente(){
+    this.navCtrl.push(DocentePage);
   }
   login(){
     this.navCtrl.push(LoginPage);
