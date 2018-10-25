@@ -21,7 +21,6 @@ import { Segnalazione } from '../../app/models/Segnalazione';
 })
 export class SegreteriadidatticaPage {
   items = [];
-  pagina:string;
   items1:any;
 
   constructor(public alertCtrl: AlertController,public navCtrl: NavController,public nav: NavController,private segnalazioneProvider: SegnalazioneProvider) {
@@ -33,47 +32,35 @@ export class SegreteriadidatticaPage {
       {
         'title': 'Studente',
         'icon': 'person',
-        'color': '#E63135'
+        'color': '#000000'
       },
       {
         'title': 'Docente',
-        'icon': 'css3',
-        'description': 'The latest version of cascading stylesheets - the styling language of the web!',
-        'color': '#0CA9EA'
+        'icon': 'person',
+        'color': '#000000'
       },
       {
         'title': 'Corso',
-        'icon': 'html5',
-        'description': 'The latest version of the web\'s markup language.',
-        'color': '#F46529'
-      },
-      {
-        'title': 'Calendario',
-        'icon': 'javascript',
-        'description': 'One of the most popular programming languages on the Web!',
-        'color': '#FFD439'
+        'icon': 'school',
+        'color': '#000000'
       },
       {
         'title': 'Insegnamento',
-        'icon': 'sass',
-        'description': 'Syntactically Awesome Stylesheets - a mature, stable, and powerful professional grade CSS extension.',
-        'color': '#CE6296'
+        'icon': 'book',
+        'color': '#000000'
       },
       {
         'title': 'Aula',
-        'icon': 'nodejs',
-        'description': 'An open-source, cross-platform runtime environment for developing server-side Web applications.',
-        'color': '#78BD43'
+        'icon': 'home',
+        'color': '#000000'
       },
       {
         'title': 'Strumento',
-        'icon': 'nodejs',
-        'description': 'An open-source, cross-platform runtime environment for developing server-side Web applications.',
-        'color': '#78BD43'
+        'icon': 'build',
+        'color': '#000000'
       },
     ]
   }
-  
   aggiungi(item){
     this.navCtrl.push('AggiungiPage',{paramNome:item})
   }
@@ -86,16 +73,24 @@ export class SegreteriadidatticaPage {
     this.navCtrl.push('DeletePage',{paramNome:item})
   }
 
-  modificaSegnalazione(idSegnalazione,abilitazione){
-    const confirm = this.alertCtrl.create({
-      title: "Segnalazione",
-      message: 'Sei sicuro di voler cambiare lo stato ?',
+  modificaSegnalazione(idSegnalazione,descrizione,abilitazione,commento){
+
+    const prompt = this.alertCtrl.create({
+      title: 'CAMBIA STATO',
+      message: descrizione,
+      inputs: [
+        {
+          name: "commento",
+          placeholder: 'Rilascia un commento'
+        },
+      ],
       buttons: [
         {
           text: 'In carico',
-          handler: () => {
+          handler: data => {
             abilitazione=1;
-            this.segnalazioneProvider.update({idSegnalazione,abilitazione} as Segnalazione).subscribe(segnalazione => {
+            commento=data.commento;
+            this.segnalazioneProvider.update({idSegnalazione,abilitazione,commento} as Segnalazione).subscribe(segnalazione => {
               this.showAlert('Stato aggiornato con successo');
               this.navCtrl.push(SegreteriadidatticaPage);
             });
@@ -104,9 +99,21 @@ export class SegreteriadidatticaPage {
         },
         {
           text: 'Risolto',
-          handler: () => {
+          handler: data => {
             abilitazione=2;
-            this.segnalazioneProvider.update({idSegnalazione,abilitazione} as Segnalazione).subscribe(segnalazione => {
+            commento=data.commento;
+            this.segnalazioneProvider.update({idSegnalazione,abilitazione,commento} as Segnalazione).subscribe(segnalazione => {
+              this.showAlert('Stato aggiornato con successo');
+              this.navCtrl.push(SegreteriadidatticaPage);
+            });
+          }
+        },
+        {
+          text: 'Rifiutata',
+          handler: data => {
+            abilitazione=3;
+            commento=data.commento;
+            this.segnalazioneProvider.update({idSegnalazione,abilitazione,commento} as Segnalazione).subscribe(segnalazione => {
               this.showAlert('Stato aggiornato con successo');
               this.navCtrl.push(SegreteriadidatticaPage);
             });
@@ -114,9 +121,9 @@ export class SegreteriadidatticaPage {
         }
       ]
     });
-    confirm.present();
-  } 
-  
+    prompt.present();
+  }
+
   cancellaSegnalazione(idSegnalazione){
     const confirm = this.alertCtrl.create({
       title: "Segnalazione",
@@ -145,10 +152,23 @@ export class SegreteriadidatticaPage {
     confirm.present();
   } 
 
+  show(nomeaula,descrizione){
+    this.showAlert1(nomeaula,descrizione)
+  }
+
   showAlert(message : string) {
     let alert = this.alertCtrl.create({
       title: 'Eliminato!',
       subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showAlert1(nomeaula:string, descrizione : string) {
+    let alert = this.alertCtrl.create({
+      title: nomeaula,
+      subTitle: descrizione,
       buttons: ['OK']
     });
     alert.present();

@@ -1,37 +1,29 @@
-<ion-header>
+  <ion-header>
     <ion-navbar color="primary">
       <ion-buttons start>
         <button ion-button icon-only (click)="cancel()">
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-title>Event Details</ion-title>
+      <ion-title>Manda una segnalazione</ion-title>
     </ion-navbar>
   </ion-header>
-   
+
   <ion-content>
     <ion-list>
       <ion-item>
-        <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
+        <ion-label>Aula</ion-label>
+        <ion-select [(ngModel)]="aula">
+          <ion-option *ngFor="let a of aule" value="{{a.idAula}}">{{a.nome}} </ion-option>
+        </ion-select>
       </ion-item>
-   
+
       <ion-item>
-        <ion-label>Start</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"></ion-datetime>
+        <ion-input type="text" placeholder="Descrizione" [(ngModel)]="descrizione"></ion-input>
       </ion-item>
-   
-      <ion-item>
-        <ion-label>End</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
-      </ion-item>
-   
-      <ion-item>
-        <ion-label>All Day?</ion-label>
-        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-      </ion-item>
+
+      <button ion-button full icon-left (click)="save()">
+        Add Event
+      </button>
     </ion-list>
-   
-    <button ion-button full icon-left (click)="save()">
-      <ion-icon name="checkmark"></ion-icon> Add Event
-    </button>
   </ion-content>
