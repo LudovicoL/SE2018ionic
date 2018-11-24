@@ -5,74 +5,100 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
 import { StudenteProvider } from '../providers/studente/studente';
-import { LoginPage } from '../pages/login/login';
 import { AngularFireModule } from 'angularfire2';
-import { CiaoPage } from '../pages/ciao/ciao';
-import { SegreteriadidatticaPage } from '../pages/segreteriadidattica/segreteriadidattica';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 import { CorsoProvider } from '../providers/corso/corso';
-import { CorsoPage } from '../pages/corso/corso';
 import { DocenteProvider } from '../providers/docente/docente';
 import { InsegnamentoProvider } from '../providers/insegnamento/insegnamento';
 import { AulaProvider } from '../providers/aula/aula';
 import { StrumentoProvider } from '../providers/strumento/strumento';
 import { SegnalazioneProvider } from '../providers/segnalazione/segnalazione';
 import { NgCalendarModule  } from 'ionic2-calendar';
-import { CalendarModule } from 'ionic3-calendar-en';
 import { FormsModule } from '@angular/forms';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
-import { CalendarioPage } from '../pages/calendario/calendario';
 import { LezioneProvider } from '../providers/lezione/lezione';
-import {DocentePage} from "../pages/docente/docente";
-import {EventModalPage} from "../pages/event-modal/event-modal";
-
+import {SegreteriadidatticaPageModule} from "../pages/segreteriadidattica/segreteriadidattica.module";
+import {HomePageModule} from "../pages/home/home.module";
+import {LoginPageModule} from "../pages/login/login.module";
+import {AggiungiPageModule} from "../pages/aggiungi/aggiungi.module";
+import {ModificaPageModule} from "../pages/modifica/modifica.module";
+import {DeletePageModule} from "../pages/delete/delete.module";
+import {DocentePageModule} from "../pages/docente/docente.module";
+import {StudentePageModule} from "../pages/studente/studente.module";
+import {CalendarioPageModule} from "../pages/calendario/calendario.module";
+import {EventModalPageModule} from "../pages/event-modal/event-modal.module";
+import {CiaoPageModule} from "../pages/ciao/ciao.module";
+import {CorsoPageModule} from "../pages/corso/corso.module";
+import {UpdatePageModule} from "../pages/update/update.module";
+import { EsameProvider } from '../providers/esame/esame';
+import {FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
+import {File} from "@ionic-native/file";
+import {FileChooser} from "@ionic-native/file-chooser"
+import { Camera } from '@ionic-native/camera';
+import {FileUploadModule} from "ng2-file-upload";
+import {Transfer} from "@ionic-native/transfer";
+import { IonicStorageModule } from '@ionic/storage';
+import firebase from 'firebase'
+import { HttpModule } from '@angular/http'; //NEW
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
+import {MaterialePageModule} from "../pages/materiale/materiale.module";
+import { MaterialeProvider } from '../providers/materiale/materiale';
+import {ChatPageModule} from "../pages/chat/chat.module";
 
 var config = {
   apiKey: "AIzaSyC1KuYsDGX-yOKlYes7z07VldAdiTVrBZ0",
   authDomain: "se2018ionic.firebaseapp.com",
   databaseURL: "https://se2018ionic.firebaseio.com",
   projectId: "se2018ionic",
-  storageBucket: "",
+  storageBucket: "se2018ionic.appspot.com",
   messagingSenderId: "773025381426"
 };
+firebase.initializeApp(config);
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    CiaoPage,
-    LoginPage,
-    SegreteriadidatticaPage,
-    CorsoPage,
-    CalendarioPage,
-    DocentePage,
-    EventModalPage
+
+
   ],
   imports: [
+    FileUploadModule,
+    HttpClientModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
+    IonicStorageModule.forRoot(),
     AngularFireAuthModule,
-    NgCalendarModule,
-    CalendarModule,
     FormsModule,
     MyDateRangePickerModule,
-    NgCalendarModule
+    NgCalendarModule,
+    HomePageModule,
+    SegreteriadidatticaPageModule,
+    LoginPageModule,
+    AggiungiPageModule,
+    ModificaPageModule,
+    DeletePageModule,
+    DocentePageModule,
+    StudentePageModule,
+    CalendarioPageModule,
+    EventModalPageModule,
+    CiaoPageModule,
+    CorsoPageModule,
+    UpdatePageModule,
+    HttpModule,
+    RoundProgressModule,
+    MaterialePageModule,
+    AngularFireDatabaseModule,
+    ChatPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage,
-    LoginPage,
-    CiaoPage,
-    SegreteriadidatticaPage,
-    CorsoPage,
-    CalendarioPage,
-    DocentePage,
-    EventModalPage
+    MyApp
+
   ],
   providers: [
     StatusBar,
@@ -85,7 +111,15 @@ var config = {
     AulaProvider,
     StrumentoProvider,
     SegnalazioneProvider,
-    LezioneProvider
+    LezioneProvider,
+    EsameProvider,
+    FileTransferObject,
+    FileTransfer,
+    File,
+    Camera,
+    Transfer,
+    FileChooser,
+    MaterialeProvider
   ]
 })
 export class AppModule {}

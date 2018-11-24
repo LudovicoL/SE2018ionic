@@ -10,4 +10,5 @@ export interface Segnalazione{
   nomeaula:string,
   nomedocente:string,
   commento:string
+  data:Date;
 }

@@ -25,7 +25,10 @@ export class SegreteriadidatticaPage {
 
   constructor(public alertCtrl: AlertController,public navCtrl: NavController,public nav: NavController,private segnalazioneProvider: SegnalazioneProvider) {
     this.segnalazioneProvider.getSegnalazioni().subscribe(segnalazioni =>{
-      this.items1=segnalazioni;
+      this.items1 = segnalazioni;
+      for(var i=0; i<segnalazioni.length;i++){
+        this.items1[i].data=new Date(segnalazioni[i].data);
+      }
     })
     
     this.items = [

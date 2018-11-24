@@ -1,24 +1,33 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>{{viewTitle}}</ion-title>
-    <ion-buttons end>
-      <button ion-button [disabled]="isToday" (click)="today()">Today</button>
-      <button ion-button (click)="changeMode('month')">M</button>
-      <button ion-button (click)="changeMode('week')">W</button>
-      <button ion-button (click)="changeMode('day')">D</button>
-      <button ion-button (click)="loadEvents()">Load Events</button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
 
-<ion-content class="has-header">
-  <calendar [eventSource]="eventSource"
-            [calendarMode]="calendar.mode"
-            [currentDate]="calendar.currentDate"
-            (onCurrentDateChanged)="onCurrentDateChanged($event)"
-            (onEventSelected)="onEventSelected($event)"
-            (onTitleChanged)="onViewTitleChanged($event)"
-            (onTimeSelected)="onTimeSelected($event)"
-            step="30">
-  </calendar>
-</ion-content>
+<ion-navbar>
+  <ion-title>chat</ion-title>
+</ion-navbar>
+
+
+<div *ngIf="login">
+  <ion-item>
+    <ion-label floating>Username</ion-label>
+    <ion-input type="text" [(ngModel)]="username"></ion-input>
+  </ion-item>
+
+    <button ion-button block outline (click)="loginUser()">Sign In</button>
+</div>
+
+<div *ngIf="listachat">
+  <ion-label>GRUPPI</ion-label>
+    <ion-item (click)="aprichatgruppo(insegnamento.nome)" *ngFor="let insegnamento of insegnamenti">
+      <ion-avatar item-start>
+        <ion-icon name="contacts" item-start></ion-icon>
+      </ion-avatar>
+      <h2>{{insegnamento.nome}}</h2>
+    </ion-item>
+
+  <ion-label>AMICI</ion-label>
+  <ion-item (click)="aprichat(studente.matricola,studente.nome+' '+studente.cognome)" *ngFor="let studente of studenti">
+    <ion-avatar item-start>
+      <ion-icon name="contact" item-start></ion-icon>
+    </ion-avatar>
+    <h2>{{studente.nome}} {{studente.cognome}}</h2>
+  </ion-item>
+</div>
+
