@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Insegnamento } from '../../app/models/Insegnamento';
 import { Observable } from '../../../node_modules/rxjs';
+import {Lezione} from "../../app/models/Lezione";
 const headers = new HttpHeaders ({'Content-Type' : 'application/json'});
 
 /*
@@ -16,6 +17,9 @@ export class InsegnamentoProvider {
   insegnamentogetUrl:string='http://localhost:8080/SE2018/insegnamento/getAll'
   updateUrl:string='http://localhost:8080/SE2018/insegnamento/update'
   updateabilitazioneUrl:string='http://localhost:8080/SE2018/insegnamento/updateabilitazione'
+  insegnamentoByCorsoUrl:string='http://localhost:8080/SE2018/insegnamento/getByIdCorso'
+  insegnamentoByDocenteUrl:string='http://localhost:8080/SE2018/insegnamento/getByIdDocente'
+  insegnamentoByStudenteUrl:string='http://localhost:8080/SE2018/insegnamento/getByIdStudente'
   constructor(public http: HttpClient) {
     console.log('Hello InsegnamentoProvider Provider');
   }
@@ -30,5 +34,15 @@ export class InsegnamentoProvider {
   }
   updateabilitazione(insegnamento:Insegnamento): Observable<Insegnamento>{
     return this.http.patch<Insegnamento>(this.updateabilitazioneUrl, insegnamento, {headers});
+  }
+  insegnamentoByCorso(id:number):Observable<Insegnamento[]>{
+    return this.http.get<Insegnamento[]>(this.insegnamentoByCorsoUrl + '/' +id);
+  }
+
+  insegnamentoByDocente(id:number):Observable<Insegnamento[]>{
+    return this.http.get<Insegnamento[]>(this.insegnamentoByDocenteUrl + '/' +id);
+  }
+  insegnamentoByStudente(id:number):Observable<Insegnamento[]>{
+    return this.http.get<Insegnamento[]>(this.insegnamentoByStudenteUrl + '/' +id);
   }
 }

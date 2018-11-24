@@ -1,40 +1,4 @@
-<!--
-
-<ion-content>
-  <div *ngIf="Segreteriadidattica">
-
-    <ion-label>&emsp; Insegnamento:{{param.nome}}<br>&emsp; Corso:{{param.nomeCorso}}</ion-label>
-
-    <ion-item>
-        <ion-calendar #calendar (onDaySelect)="onDaySelect($event)" ></ion-calendar>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Orario inizio lezione</ion-label>
-      <ion-datetime [disabled]="!enabled" displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment" (ngModelChange)="dateChanged1()"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Orario fine lezione</ion-label>
-      <ion-datetime [disabled]="!enabled" displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment1" (ngModelChange)="dateChanged2()"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Aula</ion-label>
-      <ion-select [(ngModel)]="aula" [disabled]="!appoiment || !appoiment1 || !enabled" >
-        <ion-option *ngFor="let a of items" value="{{a.idAula}}">{{a.nome}} </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <button ion-button full color='light' (click)="addlezione(appoiment,appoiment1,param.idInsegnamento,aula)" [disabled]="!appoiment || !appoiment1 || !enabled">Aggiungi lezione</button>
-
-
-    <ion-label *ngFor="let lezione of lessons">&emsp; data inizio:{{lezione.datainizio}}<br>&emsp; data fine:{{lezione.datafine}}</ion-label>
-  </div>
-</ion-content>
--->
-
-    <ion-header>
+<ion-header>
       <ion-navbar color="primary">
         <ion-title>{{viewTitle}}</ion-title>
         <ion-buttons end>
@@ -44,7 +8,8 @@
             <button ion-button (click)="changeMode('week')">W</button>
             <button ion-button (click)="changeMode('day')">D</button>
           </div>
-          <button ion-button (click)="loadEvents()">Load Events</button>
+          <button ion-button (click)="loadEvents()">Carica Lezioni</button>
+          <button ion-button (click)="loadEvents1()">Carica Esami</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
@@ -59,7 +24,23 @@
                 (onTimeSelected)="onTimeSelected($event)"
                 step="30">
       </calendar>
+      <ion-label  *ngFor="let item of events">{{item.title}}
+      </ion-label>
     </ion-content>
+
+  <ion-content *ngIf="Studenteee">
+    <calendar [eventSource]="eventSource"
+              [calendarMode]="calendar.mode"
+              [currentDate]="calendar.currentDate"
+              (onCurrentDateChanged)="onCurrentDateChanged($event)"
+              (onEventSelected)="onEventSelected($event)"
+              (onTitleChanged)="onViewTitleChanged($event)"
+              (onTimeSelected)="onTimeSelected($event)"
+              step="30">
+    </calendar>
+    <ion-label  *ngFor="let item of events">{{item.title}}
+    </ion-label>
+  </ion-content>
 
 <ion-content *ngIf="Segreteriadidattica">
   <div>
@@ -73,7 +54,7 @@
             step="30">
   </calendar>
   </div>
-  <div>
+  <div *ngIf="Lezione">
     <ion-item>
       <ion-label>Orario inizio lezione</ion-label>
       <ion-datetime [disabled]="!enabled" displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment" (ngModelChange)="dateChanged1()"></ion-datetime>
@@ -94,4 +75,35 @@
     <button ion-button full color='light' (click)="addlezione(appoiment,appoiment1,param.idInsegnamento,aula)" [disabled]="!appoiment || !appoiment1 || !enabled">Aggiungi lezione</button>
 
    </div>
+
+
+
+  <div *ngIf="Esame">
+    <ion-item>
+      <ion-label>Orario inizio esame</ion-label>
+      <ion-datetime [disabled]="!enabled" displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment" (ngModelChange)="dateChanged1()"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Orario fine esame</ion-label>
+      <ion-datetime [disabled]="!enabled" displayFormat="hh:mm A" pickerFormat="hh mm A" [(ngModel)]="appoiment1" (ngModelChange)="dateChanged2()"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Aula</ion-label>
+      <ion-select [(ngModel)]="aula" [disabled]="!appoiment || !appoiment1 || !enabled" >
+        <ion-option *ngFor="let a of items" value="{{a.idAula}}">{{a.nome}} </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tipologia</ion-label>
+      <ion-select [(ngModel)]="tipo" [disabled]="!appoiment || !appoiment1 || !enabled">
+        <ion-option value="scritto">Scritto</ion-option>
+        <ion-option value="orale">Orale</ion-option>
+      </ion-select>
+    </ion-item>
+    <button ion-button full color='light' (click)="addesame(appoiment,appoiment1,param.idInsegnamento,aula,tipo)" [disabled]="!appoiment || !appoiment1 || !enabled">Aggiungi lezione</button>
+  </div>
 </ion-content>
+
+

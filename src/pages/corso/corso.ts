@@ -1,59 +1,41 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { Corso } from '../../app/models/Corso';
-import { CorsoProvider } from '../../providers/corso/corso';
-import { HomePage } from '../home/home';
+import { Component } from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import { AngularFireDatabase } from 'angularfire2/database';
+import {Observable} from "rxjs";
 
-/**
- * Generated class for the CorsoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
   selector: 'page-corso',
   templateUrl: 'corso.html',
 })
+
 export class CorsoPage {
-  corso:Corso;
-  corsi:Corso[];
-
-  @ViewChild('nome') nome;
-  @ViewChild('facolta') facolta;
-  @ViewChild('durata') durata;
-  @ViewChild('livello') livello;
 
 
-  constructor(public alertCtrl : AlertController,private corsoProvider: CorsoProvider, public navCtrl: NavController, public navParams: NavParams) {
-  }
-  ngOnInit() {
-    this.corsoProvider.getCorso().subscribe(corsi => {
-      this.corsi = corsi;
-    });
-  }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CorsoPage');
-  }
-  
-  addCorso(nome,facolta,durata,livello) {
-    this.corsoProvider.saveCorso({nome,facolta,durata,livello} as Corso).subscribe(corso => {
-      this.showAlert('Corso aggiunto con successo');
-      this.navCtrl.push(HomePage);
-    })
-      console.log(this.corso);
-    };
+  stringa1:string="dilaz";
+  stringa2:string="dilan";
 
-    showAlert(message : string) {
-      let alert = this.alertCtrl.create({
-        title: 'Aggiunta corso!',
-        subTitle: message,
-        buttons: ['OK']
-      });
-      alert.present();
+
+  username:string='';
+  message:string='';
+  s;
+  messages:object[]=[];
+  _chatSubscription;
+
+  constructor(public db:AngularFireDatabase,public navCtrl:NavController,public navParams:NavParams) {
+    this.username=this.navParams.get('username');
+    console.log(this.stringa1)
+    console.log(this.stringa2)
+
+    if(this.stringa1>this.stringa2){
+      console.log(this.stringa1+this.stringa2)
     }
+    else{
+      console.log(this.stringa2+this.stringa1)
+    }
+
   }
 
 
-
+}

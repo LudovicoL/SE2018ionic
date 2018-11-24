@@ -197,25 +197,22 @@
     </div>
 
     <div *ngIf="Aula">
+
       <ion-list>
         <p>AULA</p>
         <ion-item>
-          <ion-label>nome      </ion-label>
-            <ion-input type = "text" #nome>      
+          <ion-label>nome</ion-label>
+            <ion-input type = "text" (ionChange)="saveNome($event)">
             </ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Grandezza</ion-label>
-            <ion-select [(ngModel)]="grandezza">
-              <ion-option value="piccola">piccola(70 persone)</ion-option>
-              <ion-option value="media">media(100 persone)</ion-option>
-              <ion-option value="grande">grande(120 persone)</ion-option>
-            </ion-select>
+          <ion-input type = "text" (ionChange)="saveGrandezza($event)">
+          </ion-input>
         </ion-item>
-
-        
-      <button ion-button full color='light' (click)="addAula(nome.value,grandezza)">Aggiungi aula</button>
+        <ion-label>Clicca sulla mappa per specificare la posizione dell'aula</ion-label>
       </ion-list>
+
     </div>
 
     <div *ngIf="Strumento">
@@ -242,11 +239,16 @@
     <div *ngIf="Calendario">
       <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-          <ion-label (click)="addCalendario(item)" *ngFor="let item of insegnamenti">
-            NOME:{{ item.nome }} <br>CORSO:{{item.nomeCorso}}
-          </ion-label>
+          <ion-item (click)="addCalendario(item)" *ngFor="let item of insegnamenti">
+            <ion-icon  name="calendar" color="dark" item-start></ion-icon>
+            INSEGNAMENTO:{{ item.nome }} <br>CORSO:{{item.nomeCorso}}
+          </ion-item>
         </ion-list>
       </div>
 
-      
+  <div *ngIf="Mappa" #map id="map_canvas" style="width:100%; height:60%">
+  </div>
+  <div *ngIf="Button">
+    <button ion-button full color='light' (click)="addAula()">Aggiungi aula</button>
+  </div>
 </ion-content>
