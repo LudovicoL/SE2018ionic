@@ -11,6 +11,8 @@ export class LezioneProvider {
   lezionegetByIdUrl:string="http://localhost:8080/SE2018/lezione/getLezioneByIdInsegnamento"
   lezioneesistenteUrl:string="http://localhost:8080/SE2018/lezione/lezioneesistente"
   lezioneDocenteUrl:string="http://localhost:8080/SE2018/lezione/lezionedocente"
+  lezioneStudenteUrl:string="http://localhost:8080/SE2018/lezione/lezionestudente"
+
   constructor(public http: HttpClient) {
     console.log('Hello LezioneProvider Provider');
   }
@@ -30,6 +32,9 @@ export class LezioneProvider {
 
   lezioneDocente(data1:Date,data2:Date,idDocente:number):Observable<Lezione[]>{
     return this.http.get<Lezione[]>(this.lezioneDocenteUrl + '/' +data1 + '/' +data2 + '/' + idDocente);
+  }
 
+  lezioneStudente(data1:Date,data2:Date,idStudente:number):Observable<Lezione[]>{
+    return this.http.get<Lezione[]>(this.lezioneStudenteUrl + '/' +data1 + '/' +data2 + '/' + idStudente);
   }
 }

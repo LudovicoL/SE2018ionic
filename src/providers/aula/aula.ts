@@ -20,6 +20,8 @@ export class AulaProvider {
   updateUrl:string='http://localhost:8080/SE2018/aula/update'
   deleteUrl:string='http://localhost:8080/SE2018/aula/delete'
   aulelibereUrl:string='http://localhost:8080/SE2018/aula/aulelibere'
+  aulelibereEsameUrl:string='http://localhost:8080/SE2018/aula/aulelibereEsame'
+
   constructor(public http: HttpClient) {
     console.log('Hello AulaProvider Provider');
   }
@@ -50,5 +52,9 @@ export class AulaProvider {
 
   aulelibere(data1:Date,data2:Date):Observable<Aula[]>{
     return this.http.get<Aula[]>(this.aulelibereUrl + '/' + data1 + '/' + data2);
+  }
+
+  aulelibereEsame(data1:Date,data2:Date):Observable<Aula[]>{
+    return this.http.get<Aula[]>(this.aulelibereEsameUrl + '/' + data1 + '/' + data2);
   }
 }

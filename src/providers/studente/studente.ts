@@ -18,6 +18,8 @@ export class StudenteProvider {
   studentegetByIdUrl:string='http://localhost:8080/SE2018/studente/getById'
   updateUrl:string='http://localhost:8080/SE2018/studente/update'
   updateAbilitazioneUrl:string='http://localhost:8080/SE2018/studente/updateAbilitazione'
+  studentiByIdCorsoUrl:string='http://localhost:8080/SE2018/studente/getStudentiByIdCorso'
+
   constructor(public http: HttpClient) {
     console.log('Hello StudenteProvider Provider');
   }
@@ -40,5 +42,9 @@ export class StudenteProvider {
 
   updateAbilitazione(studente:Studente): Observable<Studente>{
     return this.http.patch<Studente>(this.updateAbilitazioneUrl, studente, {headers});
+  }
+
+  getStudentiByIdCorso(id:number, idstudente:number): Observable<Studente[]>{
+    return this.http.get<Studente[]>(this.studentiByIdCorsoUrl + '/' + id + '/' + idstudente);
   }
 }

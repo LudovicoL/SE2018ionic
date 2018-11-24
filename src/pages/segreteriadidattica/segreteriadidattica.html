@@ -61,7 +61,7 @@
 
         <ion-list *ngSwitchCase="'segnalazione'">
               <ion-item *ngFor="let item of items1"  icon-start>
-                <ion-icon name="bookmarks" item-start></ion-icon>
+                <ion-icon name="bookmarks" item-start><br><font size="2">{{item.data|date : 'dd MMM yyyy'}}</font></ion-icon>
                   DOCENTE:{{ item.nomedocente }} <br> AULA:{{ item.nomeaula}} <br> STATO:{{item.stato}}
                 <button item-end (click)="show(item.nomeaula,item.descrizione)" ion-button color="primary" round icon-start>
                   <ion-icon name='information-circle' is-active="false"></ion-icon>
@@ -76,6 +76,3 @@
           </ion-list>
   </div>
 </ion-content>
-
-information-circle
-

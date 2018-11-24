@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { Studente } from '../../app/models/Studente';
 import { HomePage } from '../home/home';
@@ -14,17 +14,8 @@ import { AulaProvider } from '../../providers/aula/aula';
 import { Aula } from '../../app/models/Aula';
 import { Strumento } from '../../app/models/Strumento';
 import { StrumentoProvider } from '../../providers/strumento/strumento';
-import { SegreteriadidatticaPage } from '../segreteriadidattica/segreteriadidattica';
-import * as moment from 'moment';
 import { CalendarioPage } from '../calendario/calendario';
-
-
-/**
- * Generated class for the AggiungiPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker, Environment, LatLng} from '@ionic-native/google-maps';
 
 @IonicPage()
 @Component({
@@ -34,6 +25,12 @@ import { CalendarioPage } from '../calendario/calendario';
 
 
 export class AggiungiPage {
+
+  grandezza: String;
+  nome: String;
+  marker: Marker;
+
+  Button:boolean=false;
   Corso: boolean=false;
   Insegnamento: boolean=false;
   Aula: boolean=false;
@@ -44,12 +41,11 @@ export class AggiungiPage {
   parameter: string;
   nomecorso: string;
   nomedocente:string;
+  map: GoogleMap;
 
   studente:  Studente;
-  studenti: Studente[];
   docente: Docente;
   docenti:Docente[];
-
 
   aula:Aula;
   corso: Corso;
@@ -57,6 +53,7 @@ export class AggiungiPage {
   aule:Aula[];
   strumento:Strumento;
   insegnamenti:Insegnamento[];
+  Mappa: boolean=false;
   
   constructor(private modalCtrl: ModalController,private strumentoProvider: StrumentoProvider,private aulaProvider: AulaProvider,private insegnamentoProvider: InsegnamentoProvider,private docenteProvider: DocenteProvider,private corsoProvider: CorsoProvider, public alertCtrl : AlertController,private studenteProvider: StudenteProvider,public navCtrl: NavController, public navParams: NavParams,public fireAuth: AngularFireAuth) {
   
@@ -74,6 +71,8 @@ export class AggiungiPage {
 
       case "Aula":
         this.Aula=true;
+        this.Mappa=true;
+        this.Button=true;
         break;
 
       case "Strumento":
@@ -98,7 +97,16 @@ export class AggiungiPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AggiungiPage');
+    this.loadMap();
   }
+
+  saveNome(nome){
+    this.nome = nome.value;
+  }
+  saveGrandezza(grandezza){
+    this.grandezza=grandezza.value;
+  }
+
   addCorso(nome,facolta,durata,livello){
     this.corsoProvider.saveCorso({nome,facolta,durata,livello} as Corso).subscribe(corso => {
       this.showAlert('Corso aggiunto con successo');
@@ -119,7 +127,7 @@ export class AggiungiPage {
     }
     this.insegnamentoProvider.saveInsegnamento({nome,cfu,anno,semestre,idCorso,idDocente} as Insegnamento).subscribe(insegnamento => {
       this.showAlert('Insegnamento aggiunto con successo');
-      this.navCtrl.push(SegreteriadidatticaPage);
+      this.navCtrl.push('SegreteriadidatticaPage');
       })
     };
 
@@ -157,7 +165,7 @@ export class AggiungiPage {
     }) */
     this.studenteProvider.saveStudente({nome,cognome,email,password,data,indirizzo,matricola,idcorso} as Studente).subscribe(studente => {
       this.showAlert('Studente aggiunto con successo');
-      this.navCtrl.push("SegreteriadidatticaPage");
+      this.navCtrl.push('SegreteriadidatticaPage');
 
     });
   }
@@ -171,15 +179,33 @@ export class AggiungiPage {
     }) */
     this.docenteProvider.saveDocente({nome,cognome,email,password,data,indirizzo,stipendio} as Docente).subscribe(docente => {
       this.showAlert('Docente aggiunto con successo');
-      this.navCtrl.push("SegreteriadidatticaPage");
+      this.navCtrl.push('SegreteriadidatticaPage');
     });
   }
 
-  addAula(nome,grandezza){
-    this.aulaProvider.saveAula({nome,grandezza} as Aula).subscribe(aula => {
-      this.showAlert('Aula aggiunta con successo');
-      this.navCtrl.push("SegreteriadidatticaPage");
-    })
+  addAula(nome,grandezza,lat,lng) {
+    try {
+      lat = this.marker.getPosition().lat;
+    }
+    catch (e) {
+    }
+    try {
+      lng = this.marker.getPosition().lng;
+    }
+    catch (e) {
+    }
+    console.log(lat, lng);
+    nome = this.nome;
+    grandezza = this.grandezza
+    if (nome==null || grandezza==null || lat==null || lng==null) {
+      this.showAlert('inserisci tutti i campi');
+    }
+    else {
+      this.aulaProvider.saveAula({nome, grandezza, lat, lng} as Aula).subscribe(aula => {
+        this.showAlert('Aula aggiunta con successo');
+        this.navCtrl.push('SegreteriadidatticaPage');
+      })
+    }
   }
 
   addStrumento(nome,aula,funzionante,idAula){
@@ -190,7 +216,7 @@ export class AggiungiPage {
         console.log(idAula);
         this.strumentoProvider.saveStrumento({nome,idAula,funzionante} as Strumento).subscribe(strumento => {
           this.showAlert('Strumento aggiunta con successo');
-          this.navCtrl.push("SegreteriadidatticaPage");
+          this.navCtrl.push('SegreteriadidatticaPage');
         });
       }
 
@@ -223,4 +249,34 @@ export class AggiungiPage {
     alert.present();
   }
 
+  loadMap() {
+    let mapOptions: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: 40.181930,
+          lng: 18.335404
+        },
+        zoom: 18,
+        tilt: 30,
+      }
+    };
+    this.map = GoogleMaps.create('map_canvas', mapOptions);
+    this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
+      (data) => {
+        this.map.clear();
+        this.marker = this.map.addMarkerSync({
+          title: 'Ionic',
+          icon: 'blue',
+          animation: 'DROP',
+          position: {
+            lat: data[0].lat,
+            lng: data[0].lng
+          }
+        });
+        this.marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+          alert('clicked');
+        });
+      }
+    );
+  }
 }
