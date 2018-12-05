@@ -69,12 +69,11 @@ export class CalendarioPage {
         this.Docenteee = true;
         this.datainizio=new Date(2018,6,1, 0,0,0);
         this.datafine=new Date(2018,11,29,0,0,0);
-        this.param=1;
 
-        this.lezioneProvider.lezioneDocente(this.datainizio, this.datafine, this.param).subscribe(lezioni => {
+        this.lezioneProvider.lezioneDocente(this.datainizio, this.datafine, this.param.idDocente).subscribe(lezioni => {
           this.lessons = lezioni;
         })
-        this.esameProvider.esameDocente(this.datainizio, this.datafine, this.param).subscribe(esami => {
+        this.esameProvider.esameDocente(this.datainizio, this.datafine, this.param.idDocente).subscribe(esami => {
           this.exam = esami;
         })
 
@@ -84,12 +83,11 @@ export class CalendarioPage {
         this.Studenteee = true;
         this.datainizio=new Date(2018,6,1, 0,0,0);
         this.datafine=new Date(2018,11,29,0,0,0);
-        this.param=1;
 
-        this.lezioneProvider.lezioneStudente(this.datainizio, this.datafine, 1).subscribe(lezioni => {
+        this.lezioneProvider.lezioneStudente(this.datainizio, this.datafine, this.param.idStudente).subscribe(lezioni => {
           this.lessons = lezioni;
         })
-        this.esameProvider.esameStudente(this.datainizio, this.datafine, 1).subscribe(esami => {
+        this.esameProvider.esameStudente(this.datainizio, this.datafine, this.param.idStudente).subscribe(esami => {
           this.exam = esami;
         })
         break;
