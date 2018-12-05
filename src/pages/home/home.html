@@ -12,21 +12,22 @@
 
     <ion-item>
       <ion-label>email      </ion-label>
-        <ion-input type = "email" #email>      
+        <ion-input type = "email" #email>
         </ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label>password         </ion-label>
-          <ion-input type = "password" #password>      
+          <ion-input type = "password" #password>
           </ion-input>
     </ion-item>
 
   </ion-list>
+  <button ion-button full color='light' (click)="signInUser(email.value,password.value)">login</button>
+
   <button ion-button full color='light' (click)="segreteriadidattica()">Segreteria</button>
-  <button ion-button full color='light' (click)="docente()">Docente</button>
-  <button ion-button full color='light' (click)="studente()">Studente</button>
-  <button ion-button full color='light' (click)="prova()">prova</button>
-  <button ion-button full color='light' (click)="prova2()">prova</button>
+
+  <button ion-button full color='light' (click)="prova()">chat</button>
+  <!--<button ion-button full color='light' (click)="prova2()">prova</button>-->
 
 </ion-content>

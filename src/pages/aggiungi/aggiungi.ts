@@ -157,26 +157,21 @@ export class AggiungiPage {
       if(this.nomecorso==this.corsi[i].nome)
         idcorso=this.corsi[i].idCorso
     }
-/*     this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{ 
-      this.showAlert('Registrazione eseguita con successo');
-      this.navCtrl.push(HomePage);
+     this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{
     }).catch(err =>{
       this.showAlert(err.message);
-    }) */
+    })
     this.studenteProvider.saveStudente({nome,cognome,email,password,data,indirizzo,matricola,idcorso} as Studente).subscribe(studente => {
       this.showAlert('Studente aggiunto con successo');
       this.navCtrl.push('SegreteriadidatticaPage');
-
     });
   }
 
   addDocente(nome,cognome,email,password,data,indirizzo, stipendio) {
-    /* this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{ 
-      this.showAlert('Registrazione eseguita con successo');
+    this.fireAuth.auth.createUserWithEmailAndPassword(email,password).then(data =>{
     }).catch(err =>{
-      console.log(err.message)
       this.showAlert(err.message);
-    }) */
+    })
     this.docenteProvider.saveDocente({nome,cognome,email,password,data,indirizzo,stipendio} as Docente).subscribe(docente => {
       this.showAlert('Docente aggiunto con successo');
       this.navCtrl.push('SegreteriadidatticaPage');

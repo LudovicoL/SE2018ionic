@@ -47,6 +47,7 @@ import {RoundProgressModule} from 'angular-svg-round-progressbar';
 import {MaterialePageModule} from "../pages/materiale/materiale.module";
 import { MaterialeProvider } from '../providers/materiale/materiale';
 import {ChatPageModule} from "../pages/chat/chat.module";
+import { GradimentoProvider } from '../providers/gradimento/gradimento';
 
 var config = {
   apiKey: "AIzaSyC1KuYsDGX-yOKlYes7z07VldAdiTVrBZ0",
@@ -119,7 +120,8 @@ firebase.initializeApp(config);
     Camera,
     Transfer,
     FileChooser,
-    MaterialeProvider
+    MaterialeProvider,
+    GradimentoProvider
   ]
 })
 export class AppModule {}
